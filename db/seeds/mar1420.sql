@@ -23,16 +23,10 @@ VALUES
 INSERT INTO shifts (day_id, start_time, duration, num_of_employess)
 values
   (1, '09:00', 8, 2),
-  (1, '09:00', 8, 2),
-  (2, '09:00', 8, 2),
   (2, '09:00', 8, 2),
   (3, '09:00', 8, 2),
-  (3, '09:00', 8, 2),
-  (4, '09:00', 8, 2),
   (4, '09:00', 8, 2),
   (5, '09:00', 8, 3),
-  (5, '09:00', 8, 3),
-  (5, '09:00', 8, 3);
 INSERT INTO employeeshits (employee_id, shift_id)
 values
   (1, 1),
