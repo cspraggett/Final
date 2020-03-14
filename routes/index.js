@@ -7,10 +7,11 @@ pool.connect()
 router.get('/hello', (req, res) => {
   console.log('in get');
   pool.query(`
-    select * from person;
+    select * from employees;
   `)
     .then(result => {
       console.log(result.rows)
+      res.json(result.rows)
     });
 
   // pool.close();
