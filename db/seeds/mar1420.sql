@@ -1,3 +1,4 @@
+-- grant all privileges on all tables in schema public to final;
 INSERT INTO admins (id)
 values
   (1);
