@@ -8,7 +8,7 @@ export default function AddButton(props){
     <Button
       icon={<AddCircle />}
       label={props.text}
-      onClick={() => {/*props.clicked*/}}
+      onClick={props.onClick}
     />
   )
 }

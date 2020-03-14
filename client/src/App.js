@@ -1,13 +1,16 @@
 import React from 'react';
-import { Grommet, Box } from "grommet";
+import { Grommet, Box, Layer } from "grommet";
 import CalendarSelector from './components/CalendarSelector';
 import EmployeeSearch from './components/EmployeeSearch';
 import EmployeeList from './components/EmployeeList';
 import AddButton from './components/AddButton';
 import HeaderBar from '../src/components/Header';
-import ScheduleView from "./components/ScheduleView"
+import ScheduleView from "./components/ScheduleView";
+import AddEmployee from "./components/AddEmployee";
 
 function App() {
+  const [show, setShow] = React.useState();
+
   return (
     
     <Grommet>
@@ -25,8 +28,8 @@ function App() {
         >
           <CalendarSelector/>
           <EmployeeSearch/>
-          <EmployeeList/>
-          <AddButton/>
+          <EmployeeList onSave={() => setShow(false)} onClose={() => setShow(false)}/>
+          <AddButton onClick={() => setShow(true)}/>
         </Box>
         <Box direction="row">
           <ScheduleView day="Monday"/>
@@ -38,6 +41,14 @@ function App() {
           <ScheduleView day="Sunday"/>
         </Box>
       </Box>
+      {show && (
+        <Layer 
+          onEsc={() => setShow(false)}
+          onClickOutside={() => setShow(false)}
+        >
+          <AddEmployee/>
+        </Layer>
+      )}
     </Grommet>
   );
 }
