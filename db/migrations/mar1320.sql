@@ -16,8 +16,8 @@ CREATE TABLE employees (
 CREATE TABLE availability (
   id SERIAL PRIMARY KEY NOT NULL,
   employee_id INTEGER REFERENCES employees(id),
-  start_time TIME NOT NULL,
-  duration INTEGER NOT NULL,
+  start_time TIME,
+  duration INTEGER,
   day_of_week VARCHAR(10)
 );
 CREATE TABLE schedules (
