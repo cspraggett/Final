@@ -27,7 +27,7 @@ values
   (3, '09:00', 8, 2),
   (4, '09:00', 8, 2),
   (5, '09:00', 8, 3);
-INSERT INTO employeeshits (employee_id, shift_id)
+INSERT INTO employeeshifts (employee_id, shift_id)
 values
   (1, 1),
   (2, 1),
