@@ -37,7 +37,7 @@ CREATE TABLE shifts (
   duration INTEGER,
   num_of_employess INTEGER
 );
-CREATE TABLE employeeShits (
+CREATE TABLE employeeShifts (
   employee_id INTEGER REFERENCES employees(id),
   shift_id INTEGER REFERENCES shifts(id),
   PRIMARY KEY(employee_id, shift_id)
