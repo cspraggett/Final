@@ -13,6 +13,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/', route)
 app.use('/hello', route)
+app.use('/shifts', route)
 // app.get('/api/hello', (req, res) => {
 //   res.send({ express: 'Hello From Express' });
 // });

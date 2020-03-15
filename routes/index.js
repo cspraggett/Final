@@ -13,13 +13,22 @@ router.get('/hello', (req, res) => {
       console.log(result.rows)
       res.json(result.rows)
     });
+})
 
-  // pool.close();
+router.get('/shifts', (req, res) => {
+  console.log('in get');
+  pool.query(`
+    select * from shifts;
+  `)
+    .then(result => {
+      console.log(result.rows)
+      res.json(result.rows)
+    });
 })
 
 router.get('/', (req, res) => {
   console.log('in / ');
   res.send('Holla');
-})
+});
 
 module.exports = router;
