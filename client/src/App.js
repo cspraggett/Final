@@ -14,7 +14,7 @@ function App() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:Mondaymployees")
+      .get("http://localhost:5000/employees")
       .then(response => setShow(response.data))
       .catch(error => console.log("in error", error));
   }, []);
