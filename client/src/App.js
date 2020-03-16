@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Grommet, Box } from "grommet";
@@ -34,6 +35,7 @@ function App() {
       .catch(error => console.log("in error", error));
   }, []);
 
+
   return (
     <Grommet>
       <h1>{people[0].first_name}</h1>
@@ -47,10 +49,12 @@ function App() {
             color: "brand"
           }}
         >
-          <CalendarSelector />
-          <EmployeeSearch />
-          <EmployeeList />
-          <AddButton />
+
+          <CalendarSelector/>
+          <EmployeeSearch/>
+          <EmployeeList/>
+          <AddButton onClick={() => setShow(true)}/>
+
         </Box>
         <Box direction="row">
           <ScheduleView day="Monday" />
@@ -62,6 +66,14 @@ function App() {
           <ScheduleView day="Sunday" />
         </Box>
       </Box>
+      {show && (
+        <Layer 
+          onEsc={() => setShow(false)}
+          onClickOutside={() => setShow(false)}
+        >
+          <AddEmployee  onSave={() => setShow(false)} onClose={() => setShow(false)}/>
+        </Layer>
+      )}
     </Grommet>
   );
 }
