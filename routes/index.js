@@ -98,4 +98,8 @@ router.get("/", (req, res) => {
   res.send("Holla");
 });
 
+router.post("/employees", (req, res) => {
+  console.log(req.body.test);
+});
+
 module.exports = router;

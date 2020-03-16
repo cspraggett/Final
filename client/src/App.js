@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { Grommet, Box } from "grommet";
 import CalendarSelector from "./components/CalendarSelector";
 import EmployeeSearch from "./components/EmployeeSearch";
@@ -11,21 +12,31 @@ function App() {
   const [people, setPeople] = useState(["bob"]);
   console.log("hello");
   useEffect(() => {
-    fetch("http://localhost:5000/employees")
-      .then(result => {
-        console.log("in fetch", result);
-        return result.json();
-      })
-      .then(data => {
-        console.log("data:", data);
-        setPeople(data);
-      })
-
-      .catch(err => console.log("error", err));
+    // fetch("http://localhost:5000/employees")
+    //   .then(result => {
+    //     console.log("in fetch", result);
+    //     return result.json();
+    //   })
+    //   .then(data => {
+    //     console.log("data:", data);
+    //     setPeople(data);
+    //   })
+    // .catch(err => console.log("error", err));
+    // const tester = { test: "hello" };
+    // fetch("http://localhost:5000/employees", {
+    //   method: "post",
+    //   headers: new Headers(),
+    //   body: JSON.stringify(tester)
+    // }).then(result => console.log("in then:", result));
+    axios
+      .get("http://localhost:5000/employees")
+      .then(response => setPeople(response.data))
+      .catch(error => console.log("in error", error));
   }, []);
 
   return (
     <Grommet>
+      <h1>{people[0].first_name}</h1>
       <HeaderBar></HeaderBar>
       <Box direction="row">
         <Box
