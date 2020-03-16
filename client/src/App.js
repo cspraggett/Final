@@ -4,9 +4,9 @@ import CalendarSelector from './components/CalendarSelector';
 import EmployeeSearch from './components/EmployeeSearch';
 import EmployeeList from './components/EmployeeList';
 import AddButton from './components/AddButton';
-import HeaderBar from '../src/components/Header';
-import ScheduleView from "./components/ScheduleView";
-import AddEmployee from "./components/AddEmployee";
+import HeaderBar from './components/Header';
+import ScheduleView from './components/ScheduleView';
+import AddEmployee from './components/AddEmployee';
 
 function App() {
   const [show, setShow] = React.useState();
@@ -28,7 +28,7 @@ function App() {
         >
           <CalendarSelector/>
           <EmployeeSearch/>
-          <EmployeeList onSave={() => setShow(false)} onClose={() => setShow(false)}/>
+          <EmployeeList/>
           <AddButton onClick={() => setShow(true)}/>
         </Box>
         <Box direction="row">
@@ -46,7 +46,7 @@ function App() {
           onEsc={() => setShow(false)}
           onClickOutside={() => setShow(false)}
         >
-          <AddEmployee/>
+          <AddEmployee  onSave={() => setShow(false)} onClose={() => setShow(false)}/>
         </Layer>
       )}
     </Grommet>
