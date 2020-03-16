@@ -3,8 +3,6 @@ const router = express.Router();
 const client = require("../db/index");
 
 router.get("/employees", (req, res) => {
-  console.log("in get");
-  console.log(process.env);
   client
     .query(
       `
@@ -18,7 +16,6 @@ router.get("/employees", (req, res) => {
 });
 
 router.get("/shifts", (req, res) => {
-  console.log("in get");
   client
     .query(
       `
@@ -32,7 +29,6 @@ router.get("/shifts", (req, res) => {
 });
 
 router.get("/admins", (req, res) => {
-  console.log("in get");
   client
     .query(
       `
@@ -46,7 +42,6 @@ router.get("/admins", (req, res) => {
 });
 
 router.get("/availability", (req, res) => {
-  console.log("in get");
   client
     .query(
       `
@@ -54,13 +49,12 @@ router.get("/availability", (req, res) => {
   `
     )
     .then(result => {
-      console.log(result.rows);
+      // console.log(result.rows);
       res.json(result.rows);
     });
 });
 
 router.get("/days", (req, res) => {
-  console.log("in get");
   client
     .query(
       `
@@ -74,7 +68,6 @@ router.get("/days", (req, res) => {
 });
 
 router.get("/employeeshifts", (req, res) => {
-  console.log("in get");
   client
     .query(
       `
@@ -88,7 +81,6 @@ router.get("/employeeshifts", (req, res) => {
 });
 
 router.get("/schedules", (req, res) => {
-  console.log("in get");
   client
     .query(
       `
