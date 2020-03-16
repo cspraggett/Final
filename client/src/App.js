@@ -1,44 +1,26 @@
-
 import React, { useEffect, useState } from "react";
+import { Grommet, Box, Layer } from "grommet";
 import axios from "axios";
-import { Grommet, Box } from "grommet";
 import CalendarSelector from "./components/CalendarSelector";
 import EmployeeSearch from "./components/EmployeeSearch";
 import EmployeeList from "./components/EmployeeList";
 import AddButton from "./components/AddButton";
-import HeaderBar from "../src/components/Header";
+import HeaderBar from "./components/Header";
 import ScheduleView from "./components/ScheduleView";
+import AddEmployee from "./components/AddEmployee";
 
 function App() {
-  const [people, setPeople] = useState(["bob"]);
-  console.log("hello");
+  const [show, setShow] = useState();
+
   useEffect(() => {
-    // fetch("http://localhost:5000/employees")
-    //   .then(result => {
-    //     console.log("in fetch", result);
-    //     return result.json();
-    //   })
-    //   .then(data => {
-    //     console.log("data:", data);
-    //     setPeople(data);
-    //   })
-    // .catch(err => console.log("error", err));
-    // const tester = { test: "hello" };
-    // fetch("http://localhost:5000/employees", {
-    //   method: "post",
-    //   headers: new Headers(),
-    //   body: JSON.stringify(tester)
-    // }).then(result => console.log("in then:", result));
     axios
       .get("http://localhost:Mondaymployees")
-      .then(response => setPeople(response.data))
+      .then(response => setShow(response.data))
       .catch(error => console.log("in error", error));
   }, []);
 
-
   return (
     <Grommet>
-      <h1>{people[0].first_name}</h1>
       <HeaderBar></HeaderBar>
       <Box direction="row">
         <Box
@@ -49,12 +31,10 @@ function App() {
             color: "brand"
           }}
         >
-
-          <CalendarSelector/>
-          <EmployeeSearch/>
-          <EmployeeList/>
-          <AddButton onClick={() => setShow(true)}/>
-
+          <CalendarSelector />
+          <EmployeeSearch />
+          <EmployeeList />
+          <AddButton onClick={() => setShow(true)} />
         </Box>
         <Box direction="row">
           <ScheduleView day="Monday" />
@@ -67,15 +47,17 @@ function App() {
         </Box>
       </Box>
       {show && (
-        <Layer 
+        <Layer
           onEsc={() => setShow(false)}
           onClickOutside={() => setShow(false)}
         >
-          <AddEmployee  onSave={() => setShow(false)} onClose={() => setShow(false)}/>
+          <AddEmployee
+            onSave={() => setShow(false)}
+            onClose={() => setShow(false)}
+          />
         </Layer>
       )}
     </Grommet>
   );
 }
-
 export default App;
