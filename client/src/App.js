@@ -11,7 +11,9 @@ import AddEmployee from "./components/AddEmployee";
 
 function App() {
   const [show, setShow] = useState();
+  
   const [employees, setEmployees] = useState([0]);
+
 
   useEffect(() => {
     axios
