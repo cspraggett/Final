@@ -5,12 +5,7 @@ export default function EmployeeList(props){
   return (
   <List
     primaryKey="name"
-    data={[
-      { name: 'Alan'},
-      { name: 'Bryan'},
-      { name: 'Chris'},
-      { name: 'Eric'},
-    ]}
+    data={props.emp}
   />
   )
 }

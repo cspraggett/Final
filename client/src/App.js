@@ -11,20 +11,23 @@ import AddEmployee from "./components/AddEmployee";
 
 function App() {
   const [show, setShow] = useState();
-   
-  const days =["Monday", "Tuesday", "Wednesday"];
-  const day = days.map
-  const employees = {
-    1: {name: "blah"},
-    2: {name: "roxa" }
-  };
+  
+  const [employees, setEmployees] = useState([0]);
+
 
   useEffect(() => {
     axios
       .get("http://localhost:5000/employees")
-      .then(response => setShow(response.data))
+      .then(response => {setEmployees(response.data)})
       .catch(error => console.log("in error", error));
   }, []);
+
+  useEffect (() => {
+    setEmployees([
+    {name:'John Doe', email:'jd@gmail.com'},
+    {name:'Jane Doe', email:'janed@gmail.com'},
+    {name:'Robert Smith', email:'robs@gmail.com'},
+  ])}, []);
 
   return (
     <Grommet>
@@ -40,7 +43,7 @@ function App() {
         >
           <CalendarSelector />
           <EmployeeSearch />
-          <EmployeeList />
+          <EmployeeList emp={employees}/>
           <AddButton onClick={() => setShow(true)} />
         </Box>
         <Box direction="row">
@@ -59,7 +62,12 @@ function App() {
           onClickOutside={() => setShow(false)}
         >
           <AddEmployee
-            onSave={() => setShow(false)}
+            onSave={(newValue) => {
+              console.log(newValue);
+              setShow(false);
+              setEmployees([...employees, newValue]);
+              console.log("employees:", employees);
+            }}
             onClose={() => setShow(false)}
           />
         </Layer>
