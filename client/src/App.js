@@ -11,6 +11,13 @@ import AddEmployee from "./components/AddEmployee";
 
 function App() {
   const [show, setShow] = useState();
+   
+  const days =["Monday", "Tuesday", "Wednesday"];
+  const day = days.map
+  const employees = {
+    1: {name: "blah"},
+    2: {name: "roxa" }
+  };
 
   useEffect(() => {
     axios

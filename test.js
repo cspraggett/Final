@@ -1,14 +1,12 @@
 
-}
-
 modal component gets passed through prop 
 display show : true || false toggle
 
 
 const state ={
   employees:{
-    employee_id: { name: 'Bob'},
-    employee_id: {name: 'Jane'}
+    1: { name: 'Bob'},
+    2: {name: 'Jane'}
   },
   ScheduleID: {
    Monday: {
@@ -21,3 +19,4 @@ const state ={
     }
   }
 }
+

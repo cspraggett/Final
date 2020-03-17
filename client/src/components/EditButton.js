@@ -8,7 +8,7 @@ export default function EditButton(props) {
     <Button
   icon={<Edit />}
   label="Edit"
-  onClick={() => {}}
+  onClick={(props) => {}}
     />
   )
 }
