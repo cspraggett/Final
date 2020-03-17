@@ -9,11 +9,11 @@ import HeaderBar from "./components/Header";
 import ScheduleView from "./components/ScheduleView";
 import AddEmployee from "./components/AddEmployee";
 
+let temp;
+
 function App() {
   const [show, setShow] = useState();
-  
   const [employees, setEmployees] = useState([0]);
-
 
   useEffect(() => {
     axios
@@ -29,6 +29,21 @@ function App() {
     {name:'Robert Smith', email:'robs@gmail.com'},
   ])}, []);
 
+  function saveEmployee(newValue){
+    if(temp){
+      console.log(temp);
+      let newList = employees.filter(element => element.name !== temp.name)
+      console.log(newList);
+      setEmployees([newList]);//doesn't do anything
+      console.log(employees);
+    }
+    temp = null;
+    setShow(false);
+    console.log("before alway set");
+    setEmployees([...employees, newValue]);
+    console.log("After always set");
+  }
+
   return (
     <Grommet>
       <HeaderBar></HeaderBar>
@@ -43,7 +58,7 @@ function App() {
         >
           <CalendarSelector />
           <EmployeeSearch />
-          <EmployeeList emp={employees}/>
+          <EmployeeList onClick={(datum) => {setShow(true); temp = datum}} emp={employees}/>
           <AddButton onClick={() => setShow(true)} />
         </Box>
         <Box direction="row">
@@ -61,13 +76,8 @@ function App() {
           onEsc={() => setShow(false)}
           onClickOutside={() => setShow(false)}
         >
-          <AddEmployee
-            onSave={(newValue) => {
-              console.log(newValue);
-              setShow(false);
-              setEmployees([...employees, newValue]);
-              console.log("employees:", employees);
-            }}
+          <AddEmployee starting={temp}
+            onSave={saveEmployee}
             onClose={() => setShow(false)}
           />
         </Layer>

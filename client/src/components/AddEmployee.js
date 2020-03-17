@@ -6,7 +6,7 @@ export default function AddEmployee(props){
   return(
     <Box>
       <Button alignSelf="end" icon={<Close/>} onClick={props.onClose}/>
-      <Form onSubmit={({value}) => props.onSave(value)}>
+      <Form value={props.starting} onSubmit={({value}) => props.onSave(value)}>
         <FormField name="name" Label="Name" placeholder="name" />
         <FormField name="email" Label="Email" placeholder="email"/>
         <Button type="submit" alignSelf="end" icon={<Save/>}/>
