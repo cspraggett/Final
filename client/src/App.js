@@ -15,12 +15,12 @@ function App() {
   const [employees, setEmployees] = useState([0]);
 
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/employees")
-      .then(response => {setEmployees(response.data)})
-      .catch(error => console.log("in error", error));
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:5000/employees")
+  //     .then(response => {setEmployees(response.data)})
+  //     .catch(error => console.log("in error", error));
+  // }, []);
 
   useEffect (() => {
     setEmployees([
