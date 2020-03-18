@@ -20,13 +20,9 @@ export default function ScheduleView(props){
       <List
       border={true}
       primaryKey="object"
+
       data = {shifts}
 
-      // data={[
-      //   {object:<Shift dayId={props.dayId} start={9} duration={8} capacity={4}/>},
-        // {object:"other shift data"},
-        
-      // ]}
       />
     </Box>
   );

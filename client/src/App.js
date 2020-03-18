@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Grommet, Box, Layer } from "grommet";
 import axios from "axios";
 import CalendarSelector from "./components/CalendarSelector";
-import EmployeeSearch from "./components/EmployeeSearch";
 import EmployeeList from "./components/EmployeeList";
 import AddButton from "./components/AddButton";
 import HeaderBar from "./components/Header";
 import ScheduleView from "./components/ScheduleView";
 import AddEmployee from "./components/AddEmployee";
+
+
+let selectedEmployee;
 
 function revisedRandId() {
   return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
@@ -102,6 +104,42 @@ function App() {
 
 
 
+
+
+// function App() {
+//   const [show, setShow] = useState();
+//   const [employees, setEmployees] = useState([0]);
+//   const [shifts, setShifts] = useState([0]);
+
+//   useEffect(() => {
+//     axios
+//       .get("http://localhost:5000/employees")
+//       .then(response => {
+//         setEmployees(response.data);
+//       })
+//       .catch(error => console.log("in error", error));
+//   }, []);
+
+//   useEffect(() => {
+//     axios
+//       .get("http://localhost:5000/initial")
+//       .then(response => {
+//         setShifts(response.data);
+//       })
+//       .catch(error => console.log("in error", error));
+//   }, []);
+
+  // useEffect(() => {
+  //   setEmployees([
+  //     { name: "John Doe", email: "jd@gmail.com" },
+  //     { name: "Jane Doe", email: "janed@gmail.com" },
+  //     { name: "Robert Smith", email: "robs@gmail.com" }
+  //   ]);
+  // }, []);
+
+
+
+
   return (
     <Grommet>
       <HeaderBar></HeaderBar>
@@ -115,11 +153,13 @@ function App() {
           }}
         >
           <CalendarSelector />
+
           <EmployeeSearch />
           <EmployeeList emp={Object.values(employees)} />
           <AddButton onClick={() => setShow(true)} />
         </Box>
         <Box direction="row">{ScheduleViews}</Box>
+
       </Box>
       {show && (
         <Layer
@@ -127,9 +167,15 @@ function App() {
           onClickOutside={() => setShow(false)}
         >
           <AddEmployee
+
             onSave={
               updateEmployees
             }
+
+            starting={
+              selectedEmployee && selectedEmployee
+            } /*this only sets the starting data if it exists. Trust me*/
+
             onClose={() => setShow(false)}
           />
         </Layer>

@@ -2,6 +2,30 @@ const express = require("express");
 const router = express.Router();
 const client = require("../db/index");
 
+let employees;
+let shifts;
+let employeeShifts;
+
+router.get("/", (req, res) => {
+  console.log("in / ");
+  res.send("Holla");
+});
+
+const makeShiftState = (shifts, employeeShifts) => {
+  const state = [];
+  for (const shift of shifts) {
+    const s = shift;
+    s.employees = [];
+    for (const employee of employeeShifts) {
+      if (employee.shift_id === shift.id) {
+        s.employees.push(employee.employee_id);
+      }
+    }
+    state.push(s);
+  }
+  return state;
+};
+
 router.get("/employees", (req, res) => {
   client
     .query(
@@ -10,96 +34,29 @@ router.get("/employees", (req, res) => {
   `
     )
     .then(result => {
-      console.log(result.rows);
+      employees = result.rows;
       res.json(result.rows);
-    });
+    })
+    .catch(error => console.log(error));
 });
 
-router.get("/shifts", (req, res) => {
-  client
-    .query(
+router.get("/initial", (req, res) => {
+  Promise.all([
+    client.query(
       `
-    select * from shifts;
-  `
-    )
-    .then(result => {
-      console.log(result.rows);
-      res.json(result.rows);
-    });
-});
-
-router.get("/admins", (req, res) => {
-  client
-    .query(
+        select * from shifts;
       `
-    select * from admins;
-  `
-    )
-    .then(result => {
-      console.log(result.rows);
-      res.json(result.rows);
-    });
-});
-
-router.get("/availability", (req, res) => {
-  client
-    .query(
+    ),
+    client.query(
       `
-    select * from availability;
-  `
-    )
-    .then(result => {
-      // console.log(result.rows);
-      res.json(result.rows);
-    });
-});
-
-router.get("/days", (req, res) => {
-  client
-    .query(
+        select * from employeeshifts;
       `
-    select * from days;
-  `
     )
-    .then(result => {
-      console.log(result.rows);
-      res.json(result.rows);
-    });
-});
-
-router.get("/employeeshifts", (req, res) => {
-  client
-    .query(
-      `
-    select * from days;
-  `
-    )
-    .then(result => {
-      console.log(result.rows);
-      res.json(result.rows);
-    });
-});
-
-router.get("/schedules", (req, res) => {
-  client
-    .query(
-      `
-    select * from schedules;
-  `
-    )
-    .then(result => {
-      console.log(result.rows);
-      res.json(result.rows);
-    });
-});
-
-router.get("/", (req, res) => {
-  console.log("in / ");
-  res.send("Holla");
-});
-
-router.post("/employees", (req, res) => {
-  console.log(req.body.test);
+  ]).then(all => {
+    shifts = all[0].rows;
+    employeeShifts = all[1].rows;
+    res.json(makeShiftState(shifts, employeeShifts));
+  });
 });
 
 module.exports = router;
