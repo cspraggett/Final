@@ -13,24 +13,39 @@ let selectedEmployee;
 function App() {
   const [show, setShow] = useState();
   const [employees, setEmployees] = useState([0]);
+  const [shifts, setShifts] = useState([0]);
 
   useEffect(() => {
     axios
       .get("http://localhost:5000/employees")
-      .then(response => {setEmployees(response.data)})
+      .then(response => {
+        setEmployees(response.data);
+      })
       .catch(error => console.log("in error", error));
   }, []);
 
-  useEffect (() => {
-    setEmployees([
-    {name:'John Doe', email:'jd@gmail.com'},
-    {name:'Jane Doe', email:'janed@gmail.com'},
-    {name:'Robert Smith', email:'robs@gmail.com'},
-  ])}, []);
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/initial")
+      .then(response => {
+        setShifts(response.data);
+      })
+      .catch(error => console.log("in error", error));
+  }, []);
 
-  function saveEmployee(newValue){
-    if(selectedEmployee){
-      let newList = employees.filter(element => element.name !== selectedEmployee.name)
+  // useEffect(() => {
+  //   setEmployees([
+  //     { name: "John Doe", email: "jd@gmail.com" },
+  //     { name: "Jane Doe", email: "janed@gmail.com" },
+  //     { name: "Robert Smith", email: "robs@gmail.com" }
+  //   ]);
+  // }, []);
+
+  function saveEmployee(newValue) {
+    if (selectedEmployee) {
+      let newList = employees.filter(
+        element => element.name !== selectedEmployee.name
+      );
       setEmployees([...newList, newValue]);
     } else {
       setEmployees([...employees, newValue]);
@@ -52,17 +67,23 @@ function App() {
           }}
         >
           <CalendarSelector />
-          <EmployeeList onClick={(datum) => {setShow(true); selectedEmployee = datum}} emp={employees}/>
+          <EmployeeList
+            onClick={datum => {
+              setShow(true);
+              selectedEmployee = datum;
+            }}
+            emp={employees}
+          />
           <AddButton onClick={() => setShow(true)} />
         </Box>
         <Box direction="row">
-          <ScheduleView day="Monday" employeeOptions={employees}/>
-          <ScheduleView day="Tuesday" employeeOptions={employees}/>
-          <ScheduleView day="Wednesday" employeeOptions={employees}/>
-          <ScheduleView day="Thursday" employeeOptions={employees}/>
-          <ScheduleView day="Friday" employeeOptions={employees}/>
-          <ScheduleView day="Saturday" employeeOptions={employees}/>
-          <ScheduleView day="Sunday" employeeOptions={employees}/>
+          <ScheduleView day="Monday" employeeOptions={employees} />
+          <ScheduleView day="Tuesday" employeeOptions={employees} />
+          <ScheduleView day="Wednesday" employeeOptions={employees} />
+          <ScheduleView day="Thursday" employeeOptions={employees} />
+          <ScheduleView day="Friday" employeeOptions={employees} />
+          <ScheduleView day="Saturday" employeeOptions={employees} />
+          <ScheduleView day="Sunday" employeeOptions={employees} />
         </Box>
       </Box>
       {show && (
@@ -70,8 +91,10 @@ function App() {
           onEsc={() => setShow(false)}
           onClickOutside={() => setShow(false)}
         >
-          <AddEmployee 
-            starting={selectedEmployee && selectedEmployee}/*this only sets the starting data if it exists. Trust me*/
+          <AddEmployee
+            starting={
+              selectedEmployee && selectedEmployee
+            } /*this only sets the starting data if it exists. Trust me*/
             onSave={saveEmployee}
             onClose={() => setShow(false)}
           />
