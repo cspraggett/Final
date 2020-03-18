@@ -35,7 +35,7 @@ CREATE TABLE shifts (
   day_id INTEGER REFERENCES days(id),
   start_time TIME NOT NULL,
   duration INTEGER,
-  num_of_employess INTEGER
+  num_of_employees INTEGER
 );
 CREATE TABLE employeeShifts (
   employee_id INTEGER REFERENCES employees(id),

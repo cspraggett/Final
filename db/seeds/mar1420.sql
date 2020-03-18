@@ -11,7 +11,7 @@ values
   (1, 'Sean', 'Burke', 'sburke@gmail.com'),
   (
     1,
-    'Saturdayndra',
+    'Sa ndra',
     'Collins',
     'scollins@gmail.com'
   );
@@ -25,7 +25,7 @@ VALUES
   ('Wednesday', 1),
   ('Thursday', 1),
   ('Friday', 1);
-INSERT INTO shifts (day_id, start_time, duration, num_of_employess)
+INSERT INTO shifts (day_id, start_time, duration, num_of_employees)
 values
   (1, '09:00', 8, 2),
   (2, '09:00', 8, 2),
