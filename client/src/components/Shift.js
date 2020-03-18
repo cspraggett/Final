@@ -10,7 +10,6 @@ export default function Shift(props){
   props.employeeOptions.forEach(element => {
     employeeNameList.push(element.name);
   });
-  console.log("afterloop", employeeNameList);
 
   function dropDownTable(){
     let result = [];
