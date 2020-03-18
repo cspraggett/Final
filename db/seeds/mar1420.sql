@@ -12,7 +12,7 @@ values
   (1, 'Sandra', 'Collins', 'scollins@gmail.com');
 INSERT INTO schedules (admin_id, start_date)
 VALUES
-  (1, '2020,03,17');
+  (1, '2020,03,16');
 INSERT INTO days (day, schedule_id)
 VALUES
   ('m', 1),
@@ -84,3 +84,4 @@ VALUES
   (6, '09:00', 8, 'f'),
   (6, null, null, 'su'),
   (6, null, null, 'su');
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO final;
