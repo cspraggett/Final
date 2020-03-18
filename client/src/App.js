@@ -154,7 +154,6 @@ function App() {
         >
           <CalendarSelector />
 
-          <EmployeeSearch />
           <EmployeeList emp={Object.values(employees)} />
           <AddButton onClick={() => setShow(true)} />
         </Box>

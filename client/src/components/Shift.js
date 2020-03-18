@@ -5,19 +5,19 @@ import { Box, Text, Select } from "grommet";
 export default function Shift(props){
 
   
-//   return(
-//     <Box>
-//       <Text>Employees Assigned:</Text>
-//       <List
-//         primaryKey="name"
+  // return(
+    // <Box>
+    //   <Text>Employees Assigned:</Text>
+    //   <List
+    //     primaryKey="name"
 
-//         data={props.employees}
-//       />
+    //     data={props.employees}
+    //   />
 
-  const [value, setValue] = React.useState([0])
+  /* const [value, setValue] = React.useState([0])
 
   let employeeNameList = [];
-  props.employeeOptions.forEach(element => {
+  props.Object.values(employees)(element => {
     employeeNameList.push(element.name);
   });
 
@@ -33,11 +33,11 @@ export default function Shift(props){
       )
     }
     return result;
-  }
+  } */
 
   return(
     <Box>
-      {dropDownTable()}
+     {/* dropDownTable()*/} 
 
       <Box direction="row">
       <Text>{props.start} - {(props.start+props.duration > 12) ? (props.start+props.duration-12): props.start+props.duration}</Text>
