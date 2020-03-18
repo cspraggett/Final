@@ -11,7 +11,7 @@ export default function ScheduleView(props){
       border={true}
       primaryKey="object"
       data={[
-        {object:<Shift start={9} duration={8} capacity={4}/>},
+        {object:<Shift start={9} duration={8} capacity={4} employeeOptions={props.employeeOptions}/>},
         {object:"other shift data"},
         {object:<AddButton/>}
       ]}

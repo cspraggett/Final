@@ -2,14 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Grommet, Box, Layer } from "grommet";
 import axios from "axios";
 import CalendarSelector from "./components/CalendarSelector";
-import EmployeeSearch from "./components/EmployeeSearch";
 import EmployeeList from "./components/EmployeeList";
 import AddButton from "./components/AddButton";
 import HeaderBar from "./components/Header";
 import ScheduleView from "./components/ScheduleView";
 import AddEmployee from "./components/AddEmployee";
 
-let temp;
+let selectedEmployee;
 
 function App() {
   const [show, setShow] = useState();
@@ -30,18 +29,14 @@ function App() {
   ])}, []);
 
   function saveEmployee(newValue){
-    if(temp){
-      console.log(temp);
-      let newList = employees.filter(element => element.name !== temp.name)
-      console.log(newList);
-      setEmployees([newList]);//doesn't do anything
-      console.log(employees);
+    if(selectedEmployee){
+      let newList = employees.filter(element => element.name !== selectedEmployee.name)
+      setEmployees([...newList, newValue]);
+    } else {
+      setEmployees([...employees, newValue]);
     }
-    temp = null;
+    selectedEmployee = null;
     setShow(false);
-    console.log("before alway set");
-    setEmployees([...employees, newValue]);
-    console.log("After always set");
   }
 
   return (
@@ -57,18 +52,17 @@ function App() {
           }}
         >
           <CalendarSelector />
-          <EmployeeSearch />
-          <EmployeeList onClick={(datum) => {setShow(true); temp = datum}} emp={employees}/>
+          <EmployeeList onClick={(datum) => {setShow(true); selectedEmployee = datum}} emp={employees}/>
           <AddButton onClick={() => setShow(true)} />
         </Box>
         <Box direction="row">
-          <ScheduleView day="Monday" />
-          <ScheduleView day="Tuesday" />
-          <ScheduleView day="Wednesday" />
-          <ScheduleView day="Thursday" />
-          <ScheduleView day="Friday" />
-          <ScheduleView day="Saturday" />
-          <ScheduleView day="Sunday" />
+          <ScheduleView day="Monday" employeeOptions={employees}/>
+          <ScheduleView day="Tuesday" employeeOptions={employees}/>
+          <ScheduleView day="Wednesday" employeeOptions={employees}/>
+          <ScheduleView day="Thursday" employeeOptions={employees}/>
+          <ScheduleView day="Friday" employeeOptions={employees}/>
+          <ScheduleView day="Saturday" employeeOptions={employees}/>
+          <ScheduleView day="Sunday" employeeOptions={employees}/>
         </Box>
       </Box>
       {show && (
@@ -76,7 +70,8 @@ function App() {
           onEsc={() => setShow(false)}
           onClickOutside={() => setShow(false)}
         >
-          <AddEmployee starting={temp}
+          <AddEmployee 
+            starting={selectedEmployee && selectedEmployee}/*this only sets the starting data if it exists. Trust me*/
             onSave={saveEmployee}
             onClose={() => setShow(false)}
           />
