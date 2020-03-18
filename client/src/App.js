@@ -8,11 +8,13 @@ import HeaderBar from "./components/Header";
 import ScheduleView from "./components/ScheduleView";
 import AddEmployee from "./components/AddEmployee";
 
-
 let selectedEmployee;
 
 function revisedRandId() {
-  return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
+  return Math.random()
+    .toString(36)
+    .replace(/[^a-z]+/g, "")
+    .substr(2, 10);
 }
 
 function App() {
@@ -21,15 +23,14 @@ function App() {
   const [employees, setEmployees] = useState({
     1: { name: "John Doe", email: "jd@gmail.com" },
     2: { name: "Jane Doe", email: "janed@gmail.com" },
-    3: { name: "Robert Sh", email: "robs@gmail.com"},
-    4: { name: "Ro Smith", email: "ros@gmail.com"},
-    5: { name: "Robert h", email: "rbs@gmail.com"},
-    6: { name: "R Smith", email: "rob@gmail.com"},
-    7: { name: "Ro Smith", email: "obs@gmail.com"}
-  }
-  );
+    3: { name: "Robert Sh", email: "robs@gmail.com" },
+    4: { name: "Ro Smith", email: "ros@gmail.com" },
+    5: { name: "Robert h", email: "rbs@gmail.com" },
+    6: { name: "R Smith", email: "rob@gmail.com" },
+    7: { name: "Ro Smith", email: "obs@gmail.com" }
+  });
 
-  const [days, setDays] =useState({
+  const [days, setDays] = useState({
     0: {
       label: "Sunday",
       shifts: {
@@ -72,9 +73,7 @@ function App() {
         shiftID: { startTime: 9, endTime: 5, capacity: 3, employees: [3, 5] }
       }
     }
-  })
-
-  
+  });
 
   // useEffect(() => {
   //   axios
@@ -83,15 +82,15 @@ function App() {
   //     .catch(error => console.log("in error", error));
   // }, []);
 
-  const updateEmployees= (newValue) => {
-    const id = revisedRandId()
-      // console.log(newValue);
-      setShow(false);
-      setEmployees({...employees, [id]: newValue});
-      
-      // console.log("employees:", employees);
-    }
-    // setshift({... days.shifts})// spread each layer for shift to show which layer to update 
+  const updateEmployees = newValue => {
+    const id = revisedRandId();
+    // console.log(newValue);
+    setShow(false);
+    setEmployees({ ...employees, [id]: newValue });
+
+    // console.log("employees:", employees);
+  };
+  // setshift({... days.shifts})// spread each layer for shift to show which layer to update
 
   const ScheduleViews = Object.keys(days).map(dayId => (
     <ScheduleView
@@ -102,32 +101,28 @@ function App() {
     />
   ));
 
+  // function App() {
+  //   const [show, setShow] = useState();
+  //   const [employees, setEmployees] = useState([0]);
+  //   const [shifts, setShifts] = useState([0]);
 
+  //   useEffect(() => {
+  //     axios
+  //       .get("http://localhost:5000/employees")
+  //       .then(response => {
+  //         setEmployees(response.data);
+  //       })
+  //       .catch(error => console.log("in error", error));
+  //   }, []);
 
-
-
-// function App() {
-//   const [show, setShow] = useState();
-//   const [employees, setEmployees] = useState([0]);
-//   const [shifts, setShifts] = useState([0]);
-
-//   useEffect(() => {
-//     axios
-//       .get("http://localhost:5000/employees")
-//       .then(response => {
-//         setEmployees(response.data);
-//       })
-//       .catch(error => console.log("in error", error));
-//   }, []);
-
-//   useEffect(() => {
-//     axios
-//       .get("http://localhost:5000/initial")
-//       .then(response => {
-//         setShifts(response.data);
-//       })
-//       .catch(error => console.log("in error", error));
-//   }, []);
+  //   useEffect(() => {
+  //     axios
+  //       .get("http://localhost:5000/initial")
+  //       .then(response => {
+  //         setShifts(response.data);
+  //       })
+  //       .catch(error => console.log("in error", error));
+  //   }, []);
 
   // useEffect(() => {
   //   setEmployees([
@@ -136,9 +131,6 @@ function App() {
   //     { name: "Robert Smith", email: "robs@gmail.com" }
   //   ]);
   // }, []);
-
-
-
 
   return (
     <Grommet>
@@ -158,7 +150,6 @@ function App() {
           <AddButton onClick={() => setShow(true)} />
         </Box>
         <Box direction="row">{ScheduleViews}</Box>
-
       </Box>
       {show && (
         <Layer
@@ -166,15 +157,10 @@ function App() {
           onClickOutside={() => setShow(false)}
         >
           <AddEmployee
-
-            onSave={
-              updateEmployees
-            }
-
+            onSave={updateEmployees}
             starting={
               selectedEmployee && selectedEmployee
             } /*this only sets the starting data if it exists. Trust me*/
-
             onClose={() => setShow(false)}
           />
         </Layer>

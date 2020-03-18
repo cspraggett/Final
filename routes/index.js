@@ -35,7 +35,8 @@ router.get("/employees", (req, res) => {
     )
     .then(result => {
       employees = result.rows;
-      res.json(result.rows);
+      // res.json(result.rows);
+      console.log(employees);
     })
     .catch(error => console.log(error));
 });
@@ -55,7 +56,9 @@ router.get("/initial", (req, res) => {
   ]).then(all => {
     shifts = all[0].rows;
     employeeShifts = all[1].rows;
-    res.json(makeShiftState(shifts, employeeShifts));
+    // res.json(makeShiftState(shifts, employeeShifts));
+    console.log("shifts:", shifts);
+    console.log("employeeShifts:", employeeShifts);
   });
 });
 
