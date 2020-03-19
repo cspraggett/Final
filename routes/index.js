@@ -125,17 +125,17 @@ router.delete("/shift/:empId/:shiftId", (req, res) => {
     shift_id: req.params.shiftId
   };
   console.log("this is data", data);
-  // res.send("ok... got it!");
-  // client
-  //   .query(
-  //     `
-  //   DELETE FROM employeeshifts WHERE employee_id = $1 AND shift_id = $2;
-  // `,
+  res.send("ok... got it!");
+  client
+    .query(
+      `
+    DELETE FROM employeeshifts WHERE employee_id = $1 AND shift_id = $2;
+  `,
 
-  //     [req.body.employee_id, req.body.shift_id]
-  //   )
-  // .then(response => console.log("All gone", response))
-  // .catch(error => console.log(error));
+      [data.employee_id, data.shift_id]
+    )
+    .then(response => console.log("All gone", response))
+    .catch(error => console.log(error));
 });
 
 module.exports = router;
