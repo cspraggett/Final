@@ -104,4 +104,38 @@ router.get("/initial", (req, res) => {
   });
 });
 
+router.post("/shift", (req, res) => {
+  console.log(req.body);
+  res.send("ok... got it!");
+  client
+    .query(
+      `
+    INSERT INTO employeeshifts (employee_id, shift_id)
+      VALUES ($1, $2);
+  `,
+      [req.body.employee_id, req.body.shift_id]
+    )
+    .then(results => console.log("It's all good:", results))
+    .catch(error => console.log(error));
+});
+
+router.delete("/shift/:empId/:shiftId", (req, res) => {
+  const data = {
+    employee_id: req.params.empId,
+    shift_id: req.params.shiftId
+  };
+  console.log("this is data", data);
+  res.send("ok... got it!");
+  client
+    .query(
+      `
+    DELETE FROM employeeshifts WHERE employee_id = $1 AND shift_id = $2;
+  `,
+
+      [data.employee_id, data.shift_id]
+    )
+    .then(response => console.log("All gone", response))
+    .catch(error => console.log(error));
+});
+
 module.exports = router;
