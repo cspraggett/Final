@@ -11,6 +11,10 @@ router.get("/", (req, res) => {
   res.send("Holla");
 });
 
+const updateEmployees = empObj => {
+  console.log("in update employees:", empObj);
+};
+
 const makeShiftState = (shifts, employeeShifts) => {
   const state = [];
   for (const shift of shifts) {
@@ -136,6 +140,10 @@ router.delete("/shift/:empId/:shiftId", (req, res) => {
     )
     .then(response => console.log("All gone", response))
     .catch(error => console.log(error));
+});
+
+router.put("/employees", (req, res) => {
+  console.log("change employees", req.body);
 });
 
 module.exports = router;

@@ -56,7 +56,7 @@ function App() {
       .catch(error => console.log("in error", error));
   }, []);
 
-  const updateAppointment = (empId, shiftId) => {
+  const updateShift = (empId, shiftId) => {
     axios
       .post("http://localhost:5000/shift", {
         employee_id: empId,
@@ -66,12 +66,18 @@ function App() {
       .catch(error => console.log(error));
   };
 
-  const removeAppointment = (empId, shiftId) => {
+  const removeShift = (empId, shiftId) => {
     console.log("in removeAppointment", empId, shiftId);
     axios
       .delete(`http://localhost:5000/shift/${empId}/${shiftId}`)
       .then(response => console.log(response))
       .catch(error => console.log(error));
+  };
+
+  const updateEmployees = employee => {
+    axios.put("http://localhost:5000/employees", {
+      {...employee}
+    });
   };
 
   // useEffect(() => {
