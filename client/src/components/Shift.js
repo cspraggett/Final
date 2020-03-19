@@ -1,44 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Text, Select } from "grommet";
 
 
 export default function Shift(props){
 
-  
-  // return(
-    // <Box>
-    //   <Text>Employees Assigned:</Text>
-    //   <List
-    //     primaryKey="name"
-
-    //     data={props.employees}
-    //   />
-
-  /* const [value, setValue] = React.useState([0])
-
   let employeeNameList = [];
-  props.Object.values(employees)(element => {
+  
+  Object.values(props.allEmployees).forEach(element => {
     employeeNameList.push(element.name);
   });
+  console.log(employeeNameList);
+
+  let currentlyShowing = Object.values(props.assignedEmployees);
 
   function dropDownTable(){
     let result = [];
-    for(let i = 1; i < props.capacity; i++){
+    let show = "None";
+    for(let i = 0; i < props.capacity; i++){
+      if(currentlyShowing[i]) {
+        show = currentlyShowing[i].name
+      } else{
+        show = "None";
+      }
       result.push(
         <Select
-          value={value[i]}
+          value={show}
           options={employeeNameList}
-          onChange={({option}) => setValue([...value, option])}
+          onChange={({option}) => currentlyShowing[i]=option}
         />
       )
     }
     return result;
-  } */
+  }
 
   return(
     <Box>
-     {/* dropDownTable()*/} 
-
+      {dropDownTable()} 
       <Box direction="row">
       <Text>{props.start} - {(props.start+props.duration > 12) ? (props.start+props.duration-12): props.start+props.duration}</Text>
       </Box>

@@ -74,8 +74,6 @@ function App() {
     }
   })
 
-  
-
   // useEffect(() => {
   //   axios
   //     .get("http://localhost:5000/employees")
@@ -85,13 +83,9 @@ function App() {
 
   const updateEmployees= (newValue) => {
     const id = revisedRandId()
-      // console.log(newValue);
       setShow(false);
       setEmployees({...employees, [id]: newValue});
-      
-      // console.log("employees:", employees);
     }
-    // setshift({... days.shifts})// spread each layer for shift to show which layer to update 
 
   const ScheduleViews = Object.keys(days).map(dayId => (
     <ScheduleView
@@ -101,15 +95,6 @@ function App() {
       label={days[dayId].label}
     />
   ));
-
-
-
-
-
-// function App() {
-//   const [show, setShow] = useState();
-//   const [employees, setEmployees] = useState([0]);
-//   const [shifts, setShifts] = useState([0]);
 
 //   useEffect(() => {
 //     axios
@@ -129,17 +114,6 @@ function App() {
 //       .catch(error => console.log("in error", error));
 //   }, []);
 
-  // useEffect(() => {
-  //   setEmployees([
-  //     { name: "John Doe", email: "jd@gmail.com" },
-  //     { name: "Jane Doe", email: "janed@gmail.com" },
-  //     { name: "Robert Smith", email: "robs@gmail.com" }
-  //   ]);
-  // }, []);
-
-
-
-
   return (
     <Grommet>
       <HeaderBar></HeaderBar>
@@ -153,12 +127,10 @@ function App() {
           }}
         >
           <CalendarSelector />
-
           <EmployeeList emp={Object.values(employees)} />
           <AddButton onClick={() => setShow(true)} />
         </Box>
         <Box direction="row">{ScheduleViews}</Box>
-
       </Box>
       {show && (
         <Layer
@@ -166,15 +138,12 @@ function App() {
           onClickOutside={() => setShow(false)}
         >
           <AddEmployee
-
             onSave={
               updateEmployees
             }
-
             starting={
               selectedEmployee && selectedEmployee
             } /*this only sets the starting data if it exists. Trust me*/
-
             onClose={() => setShow(false)}
           />
         </Layer>
