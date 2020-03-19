@@ -11,7 +11,7 @@ values
   (1, 'Sean', 'Burke', 'sburke@gmail.com'),
   (
     1,
-    'Sa ndra',
+    'Sandra',
     'Collins',
     'scollins@gmail.com'
   );

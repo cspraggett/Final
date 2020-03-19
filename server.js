@@ -16,5 +16,7 @@ app.use(cors());
 app.use("/", route);
 app.use("/employees", route);
 app.use("/initial", route);
+app.use("/test", route);
+app.use("/shift", route);
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

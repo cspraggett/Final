@@ -21,6 +21,7 @@ function App() {
   const [show, setShow] = useState();
   const [employees, setEmployees] = useState({});
   const [days, setDays] = useState({});
+
   // const [employees, setEmployees] = useState({
   //   1: { name: "John Doe", email: "jd@gmail.com" },
   //   2: { name: "Jane Doe", email: "janed@gmail.com" },
@@ -125,6 +126,30 @@ function App() {
       .catch(error => console.log("in error", error));
   }, []);
 
+  const updateAppointment = (empId, shiftId) => {
+    axios
+      .post("http://localhost:5000/shift", {
+        employee_id: empId,
+        shift_id: shiftId
+      })
+      .then(response => console.log(response))
+      .catch(error => console.log(error));
+  };
+
+  const removeAppointment = (empId, shiftId) => {
+    console.log("in removeAppointment", empId, shiftId);
+    axios
+      .delete(`http://localhost:5000/shift/${empId}/${shiftId}`, {
+        employee_id: empId,
+        shift_id: shiftId
+      })
+      // .then(response => console.log(response))
+      .catch(error => console.log(error));
+  };
+
+  useEffect(() => {
+    removeAppointment(3, 1);
+  }, []);
   // useEffect(() => {
   //   setEmployees([
   //     { name: "John Doe", email: "jd@gmail.com" },
