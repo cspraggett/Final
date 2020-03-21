@@ -1,8 +1,24 @@
 import React, { useState } from "react";
-import { Box, Text, Select } from "grommet";
-
+import { Box, Text, Select, Button} from "grommet";
+import { Save } from "grommet-icons";
 
 export default function Shift(props){
+
+  //get back the ID from the strings
+  function idArray(strings){
+    let result = [];
+    strings.forEach(element => {
+      for (let [key, value] of Object.entries(props.allEmployees)) {
+        //console.log(`element:${element}, ${key}: ${value}`);
+        if (value.name === element){
+          result.push(key);
+          console.log(`found ${element} === ${value.name}`)
+        }
+      }
+    });
+    //console.log("result:", result)
+    return result
+  };
 
   //creates an array of all employee name strings
   let employeeNameList = [];
@@ -52,6 +68,16 @@ export default function Shift(props){
       {dropDownTable()} 
       <Box direction="row">
       <Text>{props.start} - {(props.start+props.duration > 12) ? (props.start+props.duration-12): props.start+props.duration}</Text>
+      <Button 
+        onClick={ () => {
+          props.updateShifts({
+            [props.id]: {
+              "employees": idArray(currentlyShowing)
+            }
+          })
+        }} 
+        alignSelf="end" 
+        icon={<Save/>}/>
       </Box>
     </Box>
   );

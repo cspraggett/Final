@@ -1,5 +1,6 @@
 import React from "react";
-import { List, Box, Text } from "grommet";
+import { List, Box, Text} from "grommet";
+import AddButton from "./AddButton.js";
 import Shift from "./Shift";
 import {getEmployeesForShift} from "../Helper/selector"
 
@@ -9,6 +10,7 @@ export default function ScheduleView(props){
   const shifts = shiftIds.map(shiftID => {
     const employees = getEmployeesForShift(props.employees, props.shifts, shiftID)
     return {object: <Shift 
+                      id={shiftID}
                       start={9} 
                       duration={8} 
                       capacity={4} 

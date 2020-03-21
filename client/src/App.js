@@ -86,6 +86,10 @@ function App() {
       setShow(false);
       setEmployees({...employees, [id]: newValue});
   }
+  
+  const updateShifts = (newValue) => {
+    console.log("ran it with input:", newValue);
+  };
 
   const ScheduleViews = Object.keys(days).map(dayId => (
     <ScheduleView
