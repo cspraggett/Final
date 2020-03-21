@@ -23,9 +23,14 @@ function App() {
   const [days, setDays] = useState({});
 
   const updateEmployees = newValue => {
-    const id = revisedRandId();
+    // const id = revisedRandId();
+    console.log("in updateEmployees:", newValue);
     setShow(false);
-    setEmployees({ ...employees, [id]: newValue });
+    axios
+      .put(`http://localhost:5000/employees`, newValue)
+      .then(results => console.log(results))
+      .catch(error => console.log(error));
+    // setEmployees({ ...employees, [id]: newValue });
   };
   // setshift({... days.shifts})// spread each layer for shift to show which layer to update
 
@@ -56,7 +61,7 @@ function App() {
       .catch(error => console.log("in error", error));
   }, []);
 
-  const updateAppointment = (empId, shiftId) => {
+  const updateShift = (empId, shiftId) => {
     axios
       .post("http://localhost:5000/shift", {
         employee_id: empId,
@@ -66,7 +71,7 @@ function App() {
       .catch(error => console.log(error));
   };
 
-  const removeAppointment = (empId, shiftId) => {
+  const removeShift = (empId, shiftId) => {
     console.log("in removeAppointment", empId, shiftId);
     axios
       .delete(`http://localhost:5000/shift/${empId}/${shiftId}`)
@@ -74,17 +79,40 @@ function App() {
       .catch(error => console.log(error));
   };
 
+  const addEmployee = emp => {
+    console.log("addEmployee:", emp);
+    axios
+      .post("http://localhost:5000/employees", emp)
+      .then(response => console.log(response))
+      .catch(error => console.log(error));
+  };
+
+  // useEffect(() => {
+  //   updateEmployees({
+  //     id: 1,
+  //     first_name: "Albert",
+  //     last_name: "Camus",
+  //     email: "ac@theOutsider.eu"
+  //   });
+  // }, []);
+
+  // const updateEmployees = employee => {
+  //   axios.put("http://localhost:5000/employees", {
+  //     {...employee}
+  //   });
+
   // useEffect(() => {
   //   removeAppointment(1, 1);
   // }, []);
 
-  // useEffect(() => {
-  //   setEmployees([
-  //     { name: "John Doe", email: "jd@gmail.com" },
-  //     { name: "Jane Doe", email: "janed@gmail.com" },
-  //     { name: "Robert Smith", email: "robs@gmail.com" }
-  //   ]);
-  // }, []);
+  useEffect(() => {
+    addEmployee({
+      admin_id: 1,
+      first_name: "Donald",
+      last_name: "Trump",
+      email: "dt@gmail.com"
+    });
+  }, []);
 
   return (
     <Grommet>

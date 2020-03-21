@@ -90,3 +90,6 @@ VALUES
   (6, null, null, 'Saturday'),
   (6, null, null, 'Sunday');
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO final;
+GRANT USAGE,
+SELECT
+  ON ALL SEQUENCES IN SCHEMA public TO final;
