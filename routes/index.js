@@ -9,7 +9,8 @@ const {
   postShifts,
   deleteEmployeeFromShift,
   addEmployee,
-  updateEmployee
+  updateEmployee,
+  deleteEmployee
 } = require("../helpers/queries");
 
 let employees;
@@ -80,18 +81,7 @@ router.put("/employees", (req, res) => {
 
 router.delete("/employees/:id", (req, res) => {
   console.log("delete /employees", req.params.id);
-  client
-    .query(
-      `
-    DELETE FROM employees WHERE id = $1
-  `,
-      [req.params.id]
-    )
-    .then(response => {
-      console.log("Delete worked", response.body);
-      res.send(response.body);
-    })
-    .catch(error => console.log(error));
+  deleteEmployee(req.params.id);
 });
 
 module.exports = router;

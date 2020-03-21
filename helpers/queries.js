@@ -64,6 +64,14 @@ const updateEmployee = data => {
     [data.first_name, data.last_name, data.email, data.id]
   );
 };
+const deleteEmployee = id => {
+  client.query(
+    `
+    DELETE FROM employees WHERE id = $1
+  `,
+    [id]
+  );
+};
 
 module.exports = {
   getEmployees,
@@ -71,5 +79,6 @@ module.exports = {
   postShifts,
   deleteEmployeeFromShift,
   addEmployee,
-  updateEmployee
+  updateEmployee,
+  deleteEmployee
 };

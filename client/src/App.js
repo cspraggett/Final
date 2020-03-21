@@ -90,7 +90,7 @@ function App() {
   };
 
   const deleteEmployee = id => {
-    console.log("deleteEmployee:", employees.id[id]);
+    // console.log("deleteEmployee:", employees.id[id]);
     axios
       .delete(`http://localhost:5000/employees/${id}`)
       .then(response => console.log("After delete", response))
@@ -98,7 +98,7 @@ function App() {
   };
 
   // useEffect(() => {
-  //   updateEmployees();
+  //   updateEmployees();x
   // });
 
   // useEffect(() => {
