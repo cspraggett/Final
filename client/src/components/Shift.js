@@ -40,7 +40,6 @@ export default function Shift(props){
           options={filteredOptions}//display the filtered names as the options
           onChange={({option}) => {//callback to run when a dropdown item is selected
             currentlyShowing[i]=option;
-            props.updateShifts(option);//this function is located in app.js. Right now it just console logs to prove its existance
           }}
         />
       )
