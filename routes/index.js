@@ -3,6 +3,7 @@ const router = express.Router();
 const client = require("../db/index");
 
 const { transformEmployees, convertShifts } = require("../helpers/helpers");
+const { getEmployees, getShifts, postShifts } = require("../helpers/queries");
 
 let employees;
 let shifts;
@@ -13,29 +14,10 @@ router.get("/", (req, res) => {
   res.send("Holla");
 });
 
-const makeShiftState = (shifts, employeeShifts) => {
-  const state = [];
-  for (const shift of shifts) {
-    const s = shift;
-    s.employees = [];
-    for (const employee of employeeShifts) {
-      if (employee.shift_id === shift.id) {
-        s.employees.push(employee.employee_id);
-      }
-    }
-    state.push(s);
-  }
-  return state;
-};
-
 router.get("/employees", (req, res) => {
-  client
-    .query(
-      `
-    select * from employees;
-  `
-    )
+  getEmployees()
     .then(result => {
+      // console.log("in getEmployees", result);
       employees = result.rows;
       res.json(transformEmployees(employees));
       // console.log("getting employees", transformEmployees(employees));
@@ -44,18 +26,7 @@ router.get("/employees", (req, res) => {
 });
 
 router.get("/initial", (req, res) => {
-  Promise.all([
-    client.query(
-      `
-        select * from shifts;
-      `
-    ),
-    client.query(
-      `
-        select * from employeeshifts;
-      `
-    )
-  ]).then(all => {
+  getShifts().then(all => {
     shifts = all[0].rows;
     employeeShifts = all[1].rows;
     res.json(convertShifts(shifts, employeeShifts));
@@ -65,14 +36,7 @@ router.get("/initial", (req, res) => {
 router.post("/shift", (req, res) => {
   console.log(req.body);
   res.send("ok... got it!");
-  client
-    .query(
-      `
-    INSERT INTO employeeshifts (employee_id, shift_id)
-      VALUES ($1, $2);
-  `,
-      [req.body.employee_id, req.body.shift_id]
-    )
+  postShifts(req.body)
     .then(results => console.log("It's all good:", results))
     .catch(error => console.log(error));
 });

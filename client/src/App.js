@@ -101,13 +101,17 @@ function App() {
   //   deleteEmployee(1);
   // }, []);
 
+  // useEffect(() => {
+  //   updateEmployees({
+  //     id: 7,
+  //     first_name: "Albert",
+  //     last_name: "Camus",
+  //     email: "ac@theOutsider.eu"
+  //   });
+  // }, []);
+
   useEffect(() => {
-    updateEmployees({
-      id: 7,
-      first_name: "Albert",
-      last_name: "Camus",
-      email: "ac@theOutsider.eu"
-    });
+    updateShift(4, 1);
   }, []);
 
   // const updateEmployees = employee => {
