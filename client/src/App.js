@@ -110,9 +110,13 @@ function App() {
   //   });
   // }, []);
 
-  useEffect(() => {
-    updateShift(4, 1);
-  }, []);
+  // useEffect(() => {
+  //   removeShift(1, 1);
+  // }, []);
+
+  // useEffect(() => {
+  //   updateShift(4, 1);
+  // }, []);
 
   // const updateEmployees = employee => {
   //   axios.put("http://localhost:5000/employees", {

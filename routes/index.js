@@ -3,7 +3,12 @@ const router = express.Router();
 const client = require("../db/index");
 
 const { transformEmployees, convertShifts } = require("../helpers/helpers");
-const { getEmployees, getShifts, postShifts } = require("../helpers/queries");
+const {
+  getEmployees,
+  getShifts,
+  postShifts,
+  deleteEmployeeFromShift
+} = require("../helpers/queries");
 
 let employees;
 let shifts;
@@ -34,7 +39,7 @@ router.get("/initial", (req, res) => {
 });
 
 router.post("/shift", (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   res.send("ok... got it!");
   postShifts(req.body)
     .then(results => console.log("It's all good:", results))
@@ -46,16 +51,8 @@ router.delete("/shift/:empId/:shiftId", (req, res) => {
     employee_id: req.params.empId,
     shift_id: req.params.shiftId
   };
-  console.log("this is data", data);
-  res.send("ok... got it!");
-  client
-    .query(
-      `
-    DELETE FROM employeeshifts WHERE employee_id = $1 AND shift_id = $2;
-  `,
 
-      [data.employee_id, data.shift_id]
-    )
+  deleteEmployeeFromShift(data)
     .then(response => console.log("All gone", response))
     .catch(error => console.log(error));
 });

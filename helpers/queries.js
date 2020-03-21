@@ -34,4 +34,19 @@ const postShifts = newShift => {
   );
 };
 
-module.exports = { getEmployees, getShifts, postShifts };
+const deleteEmployeeFromShift = data => {
+  return client.query(
+    `
+    DELETE FROM employeeshifts WHERE employee_id = $1 AND shift_id = $2;
+  `,
+
+    [data.employee_id, data.shift_id]
+  );
+};
+
+module.exports = {
+  getEmployees,
+  getShifts,
+  postShifts,
+  deleteEmployeeFromShift
+};
