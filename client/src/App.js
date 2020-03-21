@@ -10,12 +10,12 @@ import AddEmployee from "./components/AddEmployee";
 
 let selectedEmployee;
 
-function revisedRandId() {
-  return Math.random()
-    .toString(36)
-    .replace(/[^a-z]+/g, "")
-    .substr(2, 10);
-}
+// function revisedRandId() {
+//   return Math.random()
+//     .toString(36)
+//     .replace(/[^a-z]+/g, "")
+//     .substr(2, 10);
+// }
 
 function App() {
   const [show, setShow] = useState();
@@ -98,6 +98,10 @@ function App() {
   };
 
   // useEffect(() => {
+  //   updateEmployees();
+  // });
+
+  // useEffect(() => {
   //   deleteEmployee(1);
   // }, []);
 
@@ -127,14 +131,14 @@ function App() {
   //   removeAppointment(1, 1);
   // }, []);
 
-  // useEffect(() => {
-  //   addEmployee({
-  //     admin_id: 1,
-  //     first_name: "Donald",
-  //     last_name: "Trump",
-  //     email: "dt@gmail.com"
-  //   });
-  // }, []);
+  useEffect(() => {
+    addEmployee({
+      admin_id: 1,
+      first_name: "Donald",
+      last_name: "Trump",
+      email: "dt@gmail.com"
+    });
+  }, []);
 
   return (
     <Grommet>

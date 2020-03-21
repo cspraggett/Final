@@ -44,9 +44,21 @@ const deleteEmployeeFromShift = data => {
   );
 };
 
+const addEmployee = data => {
+  return client.query(
+    `
+    INSERT INTO employees (admin_id, first_name, last_name, email)
+    VALUES ($1, $2, $3, $4)
+    RETURNING *;
+  `,
+    [data.admin_id, data.first_name, data.last_name, data.email]
+  );
+};
+
 module.exports = {
   getEmployees,
   getShifts,
   postShifts,
-  deleteEmployeeFromShift
+  deleteEmployeeFromShift,
+  addEmployee
 };

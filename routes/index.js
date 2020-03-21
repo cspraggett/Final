@@ -7,7 +7,8 @@ const {
   getEmployees,
   getShifts,
   postShifts,
-  deleteEmployeeFromShift
+  deleteEmployeeFromShift,
+  addEmployee
 } = require("../helpers/queries");
 
 let employees;
@@ -58,21 +59,7 @@ router.delete("/shift/:empId/:shiftId", (req, res) => {
 });
 
 router.post("/employees", (req, res) => {
-  console.log("post employees:", req.body);
-  client
-    .query(
-      `
-    INSERT INTO employees (admin_id, first_name, last_name, email)
-    VALUES ($1, $2, $3, $4)
-    RETURNING *;
-  `,
-      [
-        req.body.admin_id,
-        req.body.first_name,
-        req.body.last_name,
-        req.body.email
-      ]
-    )
+  addEmployee(req.body)
     .then(response => {
       console.log("All good");
       res.send(response.rows[0]);
