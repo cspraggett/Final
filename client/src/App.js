@@ -10,12 +10,12 @@ import AddEmployee from "./components/AddEmployee";
 
 let selectedEmployee;
 
-function revisedRandId() {
-  return Math.random()
-    .toString(36)
-    .replace(/[^a-z]+/g, "")
-    .substr(2, 10);
-}
+// function revisedRandId() {
+//   return Math.random()
+//     .toString(36)
+//     .replace(/[^a-z]+/g, "")
+//     .substr(2, 10);
+// }
 
 function App() {
   const [show, setShow] = useState();
@@ -90,7 +90,6 @@ function App() {
   };
 
   const deleteEmployee = id => {
-    console.log("deleteEmployee:", employees.id[id]);
     axios
       .delete(`http://localhost:5000/employees/${id}`)
       .then(response => console.log("After delete", response))
@@ -98,17 +97,29 @@ function App() {
   };
 
   // useEffect(() => {
+  //   updateEmployees();x
+  // });
+
+  // useEffect(() => {
   //   deleteEmployee(1);
   // }, []);
 
-  useEffect(() => {
-    updateEmployees({
-      id: 7,
-      first_name: "Albert",
-      last_name: "Camus",
-      email: "ac@theOutsider.eu"
-    });
-  }, []);
+  // useEffect(() => {
+  //   updateEmployees({
+  //     id: 7,
+  //     first_name: "Albert",
+  //     last_name: "Camus",
+  //     email: "ac@theOutsider.eu"
+  //   });
+  // }, []);
+
+  // useEffect(() => {
+  //   removeShift(1, 1);
+  // }, []);
+
+  // useEffect(() => {
+  //   updateShift(4, 1);
+  // }, []);
 
   // const updateEmployees = employee => {
   //   axios.put("http://localhost:5000/employees", {
