@@ -161,4 +161,21 @@ router.post("/employees", (req, res) => {
     .catch(error => console.log(error));
 });
 
+router.put("/employees", (req, res) => {
+  console.log("put /employess", req.body);
+  client
+    .query(
+      `
+    UPDATE employees SET first_name = $1, last_name = $2,
+      email = $3 WHERE id = $4
+  `,
+      [req.body.first_name, req.body.last_name, req.body.email, req.body.id]
+    )
+    .then(response => {
+      console.log("update is good:", response.body);
+      res.send(response.body);
+    })
+    .catch(error => console.log(error));
+});
+
 module.exports = router;
