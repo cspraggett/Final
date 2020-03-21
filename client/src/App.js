@@ -105,14 +105,14 @@ function App() {
   //   removeAppointment(1, 1);
   // }, []);
 
-  useEffect(() => {
-    addEmployee({
-      admin_id: 1,
-      first_name: "Donald",
-      last_name: "Trump",
-      email: "dt@gmail.com"
-    });
-  }, []);
+  // useEffect(() => {
+  //   addEmployee({
+  //     admin_id: 1,
+  //     first_name: "Donald",
+  //     last_name: "Trump",
+  //     email: "dt@gmail.com"
+  //   });
+  // }, []);
 
   return (
     <Grommet>
