@@ -28,9 +28,11 @@ function App() {
     setShow(false);
     axios
       .put(`http://localhost:5000/employees`, newValue)
-      .then(results => console.log(results))
+      .then(results => {
+        console.log(results);
+        // setEmployees({ ...employees, []...newValue });
+      })
       .catch(error => console.log(error));
-    // setEmployees({ ...employees, [id]: newValue });
   };
   // setshift({... days.shifts})// spread each layer for shift to show which layer to update
 
@@ -87,14 +89,26 @@ function App() {
       .catch(error => console.log(error));
   };
 
+  const deleteEmployee = id => {
+    console.log("deleteEmployee:", employees.id[id]);
+    axios
+      .delete(`http://localhost:5000/employees/${id}`)
+      .then(response => console.log("After delete", response))
+      .catch(error => console.log(error));
+  };
+
   // useEffect(() => {
-  //   updateEmployees({
-  //     id: 1,
-  //     first_name: "Albert",
-  //     last_name: "Camus",
-  //     email: "ac@theOutsider.eu"
-  //   });
+  //   deleteEmployee(1);
   // }, []);
+
+  useEffect(() => {
+    updateEmployees({
+      id: 7,
+      first_name: "Albert",
+      last_name: "Camus",
+      email: "ac@theOutsider.eu"
+    });
+  }, []);
 
   // const updateEmployees = employee => {
   //   axios.put("http://localhost:5000/employees", {
