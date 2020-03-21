@@ -85,10 +85,18 @@ function App() {
     const id = revisedRandId()
       setShow(false);
       setEmployees({...employees, [id]: newValue});
-    }
+  }
+  
+  const updateShifts = (newValue) => {
+    console.log("ran it with input:", newValue);
+    //this needs to upadte the state and DB with the newly selected input
+    //newValue, right now, just represents the String of the name of the selected employee
+    //likely it should be more than that
+  };
 
   const ScheduleViews = Object.keys(days).map(dayId => (
     <ScheduleView
+      updateShifts={updateShifts}
       shifts={days[dayId].shifts}
       dayId={dayId}
       employees={employees}
