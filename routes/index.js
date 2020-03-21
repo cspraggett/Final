@@ -178,4 +178,20 @@ router.put("/employees", (req, res) => {
     .catch(error => console.log(error));
 });
 
+router.delete("/employees/:id", (req, res) => {
+  console.log("delete /employees", req.params.id);
+  client
+    .query(
+      `
+    DELETE FROM employees WHERE id = $1
+  `,
+      [req.params.id]
+    )
+    .then(response => {
+      console.log("Delete worked", response.body);
+      res.send(response.body);
+    })
+    .catch(error => console.log(error));
+});
+
 module.exports = router;

@@ -15,7 +15,7 @@ CREATE TABLE employees (
 );
 CREATE TABLE availability (
   id SERIAL PRIMARY KEY NOT NULL,
-  employee_id INTEGER REFERENCES employees(id),
+  employee_id INTEGER REFERENCES employees(id) ON DELETE CASCADE,
   start_time TIME,
   duration INTEGER,
   day_of_week VARCHAR(10)
@@ -28,7 +28,7 @@ CREATE TABLE schedules (
 CREATE TABLE days (
   id SERIAL PRIMARY KEY NOT NULL,
   day VARCHAR(10),
-  schedule_id INTEGER REFERENCES schedules(id)
+  schedule_id INTEGER REFERENCES schedules(id) ON DELETE CASCADE
 );
 CREATE TABLE shifts (
   id SERIAL PRIMARY KEY NOT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE shifts (
   num_of_employees INTEGER
 );
 CREATE TABLE employeeShifts (
-  employee_id INTEGER REFERENCES employees(id),
-  shift_id INTEGER REFERENCES shifts(id),
+  employee_id INTEGER REFERENCES employees(id) ON DELETE CASCADE,
+  shift_id INTEGER REFERENCES shifts(id) ON DELETE CASCADE,
   PRIMARY KEY(employee_id, shift_id)
 );

@@ -87,14 +87,26 @@ function App() {
       .catch(error => console.log(error));
   };
 
-  useEffect(() => {
-    updateEmployees({
-      id: 1,
-      first_name: "Albert",
-      last_name: "Camus",
-      email: "ac@theOutsider.eu"
-    });
-  }, []);
+  const deleteEmployee = id => {
+    console.log("deleteEmployee:", employees[id]);
+    axios
+      .delete(`http://localhost:5000/employees/${id}`)
+      .then(response => console.log("After delete", response))
+      .catch(error => console.log(error));
+  };
+
+  // useEffect(() => {
+  //   deleteEmployee(1);
+  // }, []);
+
+  // useEffect(() => {
+  //   updateEmployees({
+  //     id: 1,
+  //     first_name: "Albert",
+  //     last_name: "Camus",
+  //     email: "ac@theOutsider.eu"
+  //   });
+  // }, []);
 
   // const updateEmployees = employee => {
   //   axios.put("http://localhost:5000/employees", {
