@@ -55,10 +55,21 @@ const addEmployee = data => {
   );
 };
 
+const updateEmployee = data => {
+  return client.query(
+    `
+  UPDATE employees SET first_name = $1, last_name = $2,
+    email = $3 WHERE id = $4
+`,
+    [data.first_name, data.last_name, data.email, data.id]
+  );
+};
+
 module.exports = {
   getEmployees,
   getShifts,
   postShifts,
   deleteEmployeeFromShift,
-  addEmployee
+  addEmployee,
+  updateEmployee
 };
