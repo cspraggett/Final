@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const client = require("../db/index");
 
+const { transformEmployees, convertShifts } = require("../helpers/helpers");
+
 let employees;
 let shifts;
 let employeeShifts;
@@ -24,50 +26,6 @@ const makeShiftState = (shifts, employeeShifts) => {
     state.push(s);
   }
   return state;
-};
-
-const dayMap = {
-  0: "Sunday",
-  1: "Monday",
-  2: "Tuesday",
-  3: "Wednesday",
-  4: "Thursday",
-  5: "Friday",
-  6: "Saturday"
-};
-
-const convertShifts = (shifts, employeeShifts) => {
-  const state = {};
-  for (const shift of shifts) {
-    state[shift.day_id] = {
-      label: dayMap[shift.day_id],
-      shifts: {
-        shiftID: {
-          startTime: Number(shift.start_time.slice(0, 2)),
-          endTime: (Number(shift.start_time.slice(0, 2)) + shift.duration) % 12,
-          capacity: shift.num_of_employees,
-          employees: []
-        }
-      }
-    };
-    for (const employee of employeeShifts) {
-      if (employee.shift_id === shift.id) {
-        state[shift.day_id].shifts.shiftID.employees.push(employee.employee_id);
-      }
-    }
-  }
-  return state;
-};
-
-const transformEmployees = employees => {
-  let employeeState = {};
-  for (const employee of employees) {
-    employeeState[employee.id] = {
-      name: `${employee.first_name} ${employee.last_name}`,
-      email: `${employee.email}`
-    };
-  }
-  return employeeState;
 };
 
 router.get("/employees", (req, res) => {
