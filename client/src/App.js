@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grommet, Box, Layer } from "grommet";
+import { Grommet, Box, Layer, Grid } from "grommet";
 import axios from "axios";
 import CalendarSelector from "./components/CalendarSelector";
 import EmployeeList from "./components/EmployeeList";
@@ -8,88 +8,39 @@ import HeaderBar from "./components/Header";
 import ScheduleView from "./components/ScheduleView";
 import AddEmployee from "./components/AddEmployee";
 
-
 let selectedEmployee;
 
-function revisedRandId() {
-  return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
-}
+// function revisedRandId() {
+//   return Math.random()
+//     .toString(36)
+//     .replace(/[^a-z]+/g, "")
+//     .substr(2, 10);
+// }
 
 function App() {
   const [show, setShow] = useState();
 
-  const [employees, setEmployees] = useState({
-    1: { name: "John Doe", email: "jd@gmail.com" },
-    2: { name: "Jane Doe", email: "janed@gmail.com" },
-    3: { name: "Robert Sh", email: "robs@gmail.com"},
-    4: { name: "Ro Smith", email: "ros@gmail.com"},
-    5: { name: "Robert h", email: "rbs@gmail.com"},
-    6: { name: "R Smith", email: "rob@gmail.com"},
-    7: { name: "Ro Smith", email: "obs@gmail.com"}
-  }
-  );
-
-  const [days, setDays] =useState({
-    0: {
-      label: "Sunday",
-      shifts: {
-        shiftID: { startTime: 9, endTime: 5, capacity: 4, employees: [1, 2] }
-      }
-    },
-    1: {
-      label: "Monday",
-      shifts: {
-        shiftID: { startTime: 9, endTime: 5, capacity: 3, employees: [1, 2] }
-      }
-    },
-    2: {
-      label: "Tuesday",
-      shifts: {
-        shiftID: { startTime: 9, endTime: 5, capacity: 3, employees: [1, 3] }
-      }
-    },
-    3: {
-      label: "Wednesday",
-      shifts: {
-        shiftID: { startTime: 9, endTime: 5, capacity: 3, employees: [4, 5] }
-      }
-    },
-    4: {
-      label: "Thursday",
-      shifts: {
-        shiftID: { startTime: 9, endTime: 5, capacity: 3, employees: [3, 7] }
-      }
-    },
-    5: {
-      label: "Friday",
-      shifts: {
-        shiftID: { startTime: 9, endTime: 5, capacity: 3, employees: [2, 1] }
-      }
-    },
-    6: {
-      label: "Saturday",
-      shifts: {
-        shiftID: { startTime: 9, endTime: 5, capacity: 3, employees: [3, 5] }
-      }
-    }
-  })
-
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:5000/employees")
-  //     .then(response => {setEmployees(response.data)})
-  //     .catch(error => console.log("in error", error));
-  // }, []);
-
-  const updateEmployees= (newValue) => {
-    const id = revisedRandId()
-      setShow(false);
-      setEmployees({...employees, [id]: newValue});
-  }
+//    const updateShifts = (newValue) => {
+//     console.log("ran it with input:", newValue);
+//   };
   
-  const updateShifts = (newValue) => {
-    console.log("ran it with input:", newValue);
+  const [employees, setEmployees] = useState({});
+  const [days, setDays] = useState({});
+
+  const updateEmployees = newValue => {
+    // const id = revisedRandId();
+    console.log("in updateEmployees:", newValue);
+    setShow(false);
+    axios
+      .put(`http://localhost:5000/employees`, newValue)
+      .then(results => {
+        console.log(results);
+        // setEmployees({ ...employees, []...newValue });
+      })
+      .catch(error => console.log(error));
   };
+  // setshift({... days.shifts})// spread each layer for shift to show which layer to update
+
 
   const ScheduleViews = Object.keys(days).map(dayId => (
     <ScheduleView
@@ -101,51 +52,145 @@ function App() {
     />
   ));
 
-//   useEffect(() => {
-//     axios
-//       .get("http://localhost:5000/employees")
-//       .then(response => {
-//         setEmployees(response.data);
-//       })
-//       .catch(error => console.log("in error", error));
-//   }, []);
 
-//   useEffect(() => {
-//     axios
-//       .get("http://localhost:5000/initial")
-//       .then(response => {
-//         setShifts(response.data);
-//       })
-//       .catch(error => console.log("in error", error));
-//   }, []);
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/employees")
+      .then(response => {
+        setEmployees(response.data);
+      })
+      .catch(error => console.log("in error", error));
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/initial")
+      .then(response => {
+        setDays(response.data);
+      })
+      .catch(error => console.log("in error", error));
+  }, []);
+
+  const updateShift = (empId, shiftId) => {
+    axios
+      .post("http://localhost:5000/shift", {
+        employee_id: empId,
+        shift_id: shiftId
+      })
+      .then(response => console.log(response))
+      .catch(error => console.log(error));
+  };
+
+  const removeShift = (empId, shiftId) => {
+    console.log("in removeAppointment", empId, shiftId);
+    axios
+      .delete(`http://localhost:5000/shift/${empId}/${shiftId}`)
+      .then(response => console.log(response))
+      .catch(error => console.log(error));
+  };
+
+  const addEmployee = emp => {
+    console.log("addEmployee:", emp);
+    axios
+      .post("http://localhost:5000/employees", emp)
+      .then(response => console.log(response))
+      .catch(error => console.log(error));
+  };
+
+  const deleteEmployee = id => {
+    axios
+      .delete(`http://localhost:5000/employees/${id}`)
+      .then(response => console.log("After delete", response))
+      .catch(error => console.log(error));
+  };
+
+  // useEffect(() => {
+  //   updateEmployees();x
+  // });
+
+  // useEffect(() => {
+  //   deleteEmployee(1);
+  // }, []);
+
+  // useEffect(() => {
+  //   updateEmployees({
+  //     id: 7,
+  //     first_name: "Albert",
+  //     last_name: "Camus",
+  //     email: "ac@theOutsider.eu"
+  //   });
+  // }, []);
+
+  // useEffect(() => {
+  //   removeShift(1, 1);
+  // }, []);
+
+  // useEffect(() => {
+  //   updateShift(4, 1);
+  // }, []);
+
+  // const updateEmployees = employee => {
+  //   axios.put("http://localhost:5000/employees", {
+  //     {...employee}
+  //   });
+
+  // useEffect(() => {
+  //   removeAppointment(1, 1);
+  // }, []);
+
+  // useEffect(() => {
+  //   addEmployee({
+  //     admin_id: 1,
+  //     first_name: "Donald",
+  //     last_name: "Trump",
+  //     email: "dt@gmail.com"
+  //   });
+  // }, []);
+  const borderStyles = {
+    size: "small",
+    color: "neutral-3"
+  };
 
   return (
     <Grommet>
-      <HeaderBar></HeaderBar>
-      <Box direction="row">
+      <HeaderBar alignSelf="stretch"></HeaderBar>
+      <Grid
+        rows={["xxsmall", "large"]}
+        columns={["small", "flex"]}
+        gap="small"
+        areas={[
+          // { name: 'header', start: [0, 0], end: [1, 0] },
+          { name: "nav", start: [0, 0], end: [0, 1] },
+          { name: "main", start: [1, 0], end: [1, 1] }
+        ]}
+      >
         <Box
+          gridArea="nav"
           width={"small"}
           align="center"
-          border={{
-            size: "small",
-            color: "brand"
-          }}
+          border={borderStyles}
         >
           <CalendarSelector />
           <EmployeeList emp={Object.values(employees)} />
           <AddButton onClick={() => setShow(true)} />
         </Box>
-        <Box direction="row">{ScheduleViews}</Box>
-      </Box>
+
+        <Box border={borderStyles} gridArea="main" direction="row">
+          {ScheduleViews}
+        </Box>
+      </Grid>
+
+      <Box direction="row"></Box>
+
       {show && (
         <Layer
           onEsc={() => setShow(false)}
           onClickOutside={() => setShow(false)}
         >
           <AddEmployee
-            onSave={
-              updateEmployees
-            }
+
+            onSave={updateEmployees}
+
             starting={
               selectedEmployee && selectedEmployee
             } /*this only sets the starting data if it exists. Trust me*/
