@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grommet, Box, Layer } from "grommet";
+import { Grommet, Box, Layer, Grid } from "grommet";
 import axios from "axios";
 import CalendarSelector from "./components/CalendarSelector";
 import EmployeeList from "./components/EmployeeList";
@@ -138,26 +138,40 @@ function App() {
   //     email: "dt@gmail.com"
   //   });
   // }, []);
-
+  const borderStyles = {
+    size: "small",
+    color: "neutral-3"
+  };
   return (
     <Grommet>
-      <HeaderBar></HeaderBar>
-      <Box direction="row">
+      <HeaderBar alignSelf="stretch"></HeaderBar>
+      <Grid
+        rows={["xxsmall", "large"]}
+        columns={["small", "flex"]}
+        gap="small"
+        areas={[
+          // { name: 'header', start: [0, 0], end: [1, 0] },
+          { name: "nav", start: [0, 0], end: [0, 1] },
+          { name: "main", start: [1, 0], end: [1, 1] }
+        ]}
+      >
         <Box
+          gridArea="nav"
           width={"small"}
           align="center"
-          border={{
-            size: "small",
-            color: "brand"
-          }}
+          border={borderStyles}
         >
           <CalendarSelector />
 
           <EmployeeList emp={Object.values(employees)} />
           <AddButton onClick={() => setShow(true)} />
         </Box>
-        <Box direction="row">{ScheduleViews}</Box>
-      </Box>
+        <Box border={borderStyles} gridArea="main" direction="row">
+          {ScheduleViews}
+        </Box>
+      </Grid>
+
+      <Box direction="row"></Box>
       {show && (
         <Layer
           onEsc={() => setShow(false)}
