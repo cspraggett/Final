@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grommet, Box, Layer } from "grommet";
+import { Grommet, Box, Layer, Grid } from "grommet";
 import axios from "axios";
 import CalendarSelector from "./components/CalendarSelector";
 import EmployeeList from "./components/EmployeeList";
@@ -138,7 +138,10 @@ function App() {
   //     email: "dt@gmail.com"
   //   });
   // }, []);
-
+  const borderStyles = {
+    size: "small",
+    color: "neutral-3"
+  };
   return (
     <Grommet>
       <HeaderBar alignSelf="stretch"></HeaderBar>
