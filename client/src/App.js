@@ -10,20 +10,15 @@ import AddEmployee from "./components/AddEmployee";
 
 let selectedEmployee;
 
-// function revisedRandId() {
-//   return Math.random()
-//     .toString(36)
-//     .replace(/[^a-z]+/g, "")
-//     .substr(2, 10);
-// }
+function revisedRandId() {
+  return Math.random()
+    .toString(36)
+    .replace(/[^a-z]+/g, "")
+    .substr(2, 10);
+}
 
 function App() {
   const [show, setShow] = useState();
-
-   const updateShifts = (newValue) => {
-    console.log("ran it with input:", newValue);
-  };
-  
   const [employees, setEmployees] = useState({});
   const [days, setDays] = useState({});
 
@@ -39,19 +34,25 @@ function App() {
       })
       .catch(error => console.log(error));
   };
-  // setshift({... days.shifts})// spread each layer for shift to show which layer to update
 
+  // const updateEmployees = newValue => {
+  //   const id = revisedRandId();
+  //   // console.log(newValue);
+  //   setShow(false);
+  //   setEmployees({ ...employees, [id]: newValue });
+
+  //   // console.log("employees:", employees);
+  // };
+  // setshift({... days.shifts})// spread each layer for shift to show which layer to update
 
   const ScheduleViews = Object.keys(days).map(dayId => (
     <ScheduleView
-      updateShifts={updateShifts}
       shifts={days[dayId].shifts}
       dayId={dayId}
       employees={employees}
       label={days[dayId].label}
     />
   ));
-
 
   useEffect(() => {
     axios
@@ -98,6 +99,7 @@ function App() {
   };
 
   const deleteEmployee = id => {
+    console.log("deleteEmployee:", employees.id[id]);
     axios
       .delete(`http://localhost:5000/employees/${id}`)
       .then(response => console.log("After delete", response))
@@ -105,59 +107,23 @@ function App() {
   };
 
   // useEffect(() => {
-  //   updateEmployees();x
-  // });
-
-  // useEffect(() => {
-  //   deleteEmployee(1);
-  // }, []);
-
-  // useEffect(() => {
-  //   updateEmployees({
-  //     id: 7,
-  //     first_name: "Albert",
-  //     last_name: "Camus",
-  //     email: "ac@theOutsider.eu"
-  //   });
-  // }, []);
-
-  // useEffect(() => {
-  //   removeShift(1, 1);
-  // }, []);
-
-  // useEffect(() => {
-  //   updateShift(4, 1);
-  // }, []);
-
-  // const updateEmployees = employee => {
-  //   axios.put("http://localhost:5000/employees", {
-  //     {...employee}
-  //   });
-
-  // useEffect(() => {
-  //   removeAppointment(1, 1);
-  // }, []);
-
-  // useEffect(() => {
-  //   addEmployee({
-  //     admin_id: 1,
-  //     first_name: "Donald",
-  //     last_name: "Trump",
-  //     email: "dt@gmail.com"
-  //   });
+  //   setEmployees([
+  //     { name: "John Doe", email: "jd@gmail.com" },
+  //     { name: "Jane Doe", email: "janed@gmail.com" },
+  //     { name: "Robert Smith", email: "robs@gmail.com" }
+  //   ]);
   // }, []);
   const borderStyles = {
     size: "small",
     color: "neutral-3"
   };
-
   return (
     <Grommet>
       <HeaderBar alignSelf="stretch"></HeaderBar>
       <Grid
         rows={["xxsmall", "large"]}
         columns={["small", "flex"]}
-        gap="small"
+        gap="none"
         areas={[
           // { name: 'header', start: [0, 0], end: [1, 0] },
           { name: "nav", start: [0, 0], end: [0, 1] },
@@ -171,26 +137,23 @@ function App() {
           border={borderStyles}
         >
           <CalendarSelector />
+
           <EmployeeList emp={Object.values(employees)} />
           <AddButton onClick={() => setShow(true)} />
         </Box>
-
         <Box border={borderStyles} gridArea="main" direction="row">
           {ScheduleViews}
         </Box>
       </Grid>
 
       <Box direction="row"></Box>
-
       {show && (
         <Layer
           onEsc={() => setShow(false)}
           onClickOutside={() => setShow(false)}
         >
           <AddEmployee
-
             onSave={updateEmployees}
-
             starting={
               selectedEmployee && selectedEmployee
             } /*this only sets the starting data if it exists. Trust me*/
