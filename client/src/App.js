@@ -19,6 +19,11 @@ let selectedEmployee;
 
 function App() {
   const [show, setShow] = useState();
+
+//    const updateShifts = (newValue) => {
+//     console.log("ran it with input:", newValue);
+//   };
+  
   const [employees, setEmployees] = useState({});
   const [days, setDays] = useState({});
 
@@ -36,14 +41,17 @@ function App() {
   };
   // setshift({... days.shifts})// spread each layer for shift to show which layer to update
 
+
   const ScheduleViews = Object.keys(days).map(dayId => (
     <ScheduleView
+      updateShifts={updateShifts}
       shifts={days[dayId].shifts}
       dayId={dayId}
       employees={employees}
       label={days[dayId].label}
     />
   ));
+
 
   useEffect(() => {
     axios
@@ -142,6 +150,7 @@ function App() {
     size: "small",
     color: "neutral-3"
   };
+
   return (
     <Grommet>
       <HeaderBar alignSelf="stretch"></HeaderBar>
@@ -162,23 +171,26 @@ function App() {
           border={borderStyles}
         >
           <CalendarSelector />
-
           <EmployeeList emp={Object.values(employees)} />
           <AddButton onClick={() => setShow(true)} />
         </Box>
+
         <Box border={borderStyles} gridArea="main" direction="row">
           {ScheduleViews}
         </Box>
       </Grid>
 
       <Box direction="row"></Box>
+
       {show && (
         <Layer
           onEsc={() => setShow(false)}
           onClickOutside={() => setShow(false)}
         >
           <AddEmployee
+
             onSave={updateEmployees}
+
             starting={
               selectedEmployee && selectedEmployee
             } /*this only sets the starting data if it exists. Trust me*/

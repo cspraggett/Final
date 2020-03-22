@@ -1,46 +1,83 @@
-import React from "react";
-import { Box, Text, Select } from "grommet";
-
+import React, { useState } from "react";
+import { Box, Text, Select, Button} from "grommet";
+import { Save } from "grommet-icons";
 
 export default function Shift(props){
 
-  
-  // return(
-    // <Box>
-    //   <Text>Employees Assigned:</Text>
-    //   <List
-    //     primaryKey="name"
+  //get back the ID from the strings
+  function idArray(strings){
+    let result = [];
+    strings.forEach(element => {
+      for (let [key, value] of Object.entries(props.allEmployees)) {
+        //console.log(`element:${element}, ${key}: ${value}`);
+        if (value.name === element){
+          result.push(key);
+          console.log(`found ${element} === ${value.name}`)
+        }
+      }
+    });
+    //console.log("result:", result)
+    return result
+  };
 
-    //     data={props.employees}
-    //   />
-
-  /* const [value, setValue] = React.useState([0])
-
+  //creates an array of all employee name strings
   let employeeNameList = [];
-  props.Object.values(employees)(element => {
+  Object.values(props.allEmployees).forEach(element => {
     employeeNameList.push(element.name);
   });
 
+  //creates a array of strings that displays the names already assigned to the shift
+  let currentlyShowing = []
+  props.assignedEmployees.forEach((element) => {
+    currentlyShowing.push(element.name);
+  })
+
+  //filters selectable names by removing ones already in use
+  let filteredOptions = employeeNameList.filter(
+    (element) => {
+      return !currentlyShowing.includes(element);
+    }
+  );
+
+  //the actual dropdown element
   function dropDownTable(){
     let result = [];
-    for(let i = 1; i < props.capacity; i++){
+    let show = "None";
+    //one dropdown selecter per shift capacity
+    for(let i = 0; i < props.capacity; i++){
+      if(currentlyShowing[i]) {
+        show = currentlyShowing[i]
+      } else{//display "none" if there is no employee assigned to this "slot"
+        show = "None";
+      }
       result.push(
         <Select
-          value={value[i]}
-          options={employeeNameList}
-          onChange={({option}) => setValue([...value, option])}
+          value={show}
+          options={filteredOptions}//display the filtered names as the options
+          onChange={({option}) => {//callback to run when a dropdown item is selected
+            currentlyShowing[i]=option;
+          }}
         />
       )
     }
     return result;
-  } */
+  }
 
   return(
     <Box>
-     {/* dropDownTable()*/} 
-
+      {dropDownTable()} 
       <Box direction="row">
       <Text>{props.start} - {(props.start+props.duration > 12) ? (props.start+props.duration-12): props.start+props.duration}</Text>
+      <Button 
+        onClick={ () => {
+          props.updateShifts({
+            [props.id]: {
+              "employees": idArray(currentlyShowing)
+            }
+          })
+        }} 
+        alignSelf="end" 
+        icon={<Save/>}/>
       </Box>
     </Box>
   );
