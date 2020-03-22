@@ -20,9 +20,9 @@ let selectedEmployee;
 function App() {
   const [show, setShow] = useState();
 
-//    const updateShifts = (newValue) => {
-//     console.log("ran it with input:", newValue);
-//   };
+   const updateShifts = (newValue) => {
+    console.log("ran it with input:", newValue);
+  };
   
   const [employees, setEmployees] = useState({});
   const [days, setDays] = useState({});
