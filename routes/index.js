@@ -52,7 +52,7 @@ router.post("/shift", (req, res) => {
   // postShifts(req.body)
   //   .then(results => console.log("It's all good:", results))
   //   .catch(error => console.log(error));
-  getCurrentShifts(parseInt(Object.keys(req.body.data)));
+  getCurrentShifts(req.body.data);
 });
 
 router.delete("/shift/:empId/:shiftId", (req, res) => {

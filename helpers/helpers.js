@@ -1,4 +1,4 @@
-const { getCurrShifts } = require("./queries");
+const { getCurrShifts, postShifts } = require("./queries");
 
 const dayMap = {
   0: "Sunday",
@@ -46,13 +46,25 @@ const transformEmployees = employees => {
   return employeeState;
 };
 
-const getNewEmployeesOnShift = (old, new) => {
+const convertDBData = data => data.map(curr => curr.employee_id);
 
-}
+const addNewEmployeesToShift = (oldEmp, newEmp, shiftID) => {
+  console.log(oldEmp);
+  const existingData = convertDBData(oldEmp);
+  newEmp.forEach(curr => {
+    if (!existingData.includes(curr)) {
+      console.log(`${curr} isn't in the db ${existingData}`);
+      postShifts({ employee_id: curr, shift_id: shiftID });
+    }
+  });
+};
 
 getCurrentShifts = data => {
-  getCurrShifts(data)
-    .then(result => console.log("this is current", result.rows))
+  shiftID = parseInt(Object.keys(data));
+  getCurrShifts(shiftID)
+    .then(result =>
+      addNewEmployeesToShift([...result.rows], data[shiftID].employees, shiftID)
+    )
     .catch(error => console.log(result));
 };
 module.exports = { transformEmployees, convertShifts, getCurrentShifts };
