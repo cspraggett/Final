@@ -23,6 +23,17 @@ const getShifts = () => {
   ]);
 };
 
+const getCurrShifts = id => {
+  return client.query(
+    `
+    select employee_id 
+    from employeeshifts 
+    where shift_id = $1
+  `,
+    [id]
+  );
+};
+
 const postShifts = newShift => {
   console.log("in postShifts", newShift);
   return client.query(
@@ -80,5 +91,6 @@ module.exports = {
   deleteEmployeeFromShift,
   addEmployee,
   updateEmployee,
-  deleteEmployee
+  deleteEmployee,
+  getCurrShifts
 };

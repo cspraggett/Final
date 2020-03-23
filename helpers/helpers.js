@@ -1,3 +1,5 @@
+const { getCurrShifts } = require("./queries");
+
 const dayMap = {
   0: "Sunday",
   1: "Monday",
@@ -44,7 +46,16 @@ const transformEmployees = employees => {
   return employeeState;
 };
 
-module.exports = { transformEmployees, convertShifts };
+const getNewEmployeesOnShift = (old, new) => {
+
+}
+
+getCurrentShifts = data => {
+  getCurrShifts(data)
+    .then(result => console.log("this is current", result.rows))
+    .catch(error => console.log(result));
+};
+module.exports = { transformEmployees, convertShifts, getCurrentShifts };
 
 // const makeShiftState = (shifts, employeeShifts) => {
 //   const state = [];

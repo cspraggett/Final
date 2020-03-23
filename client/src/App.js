@@ -66,13 +66,12 @@ function App() {
 
   const updateShifts = data => {
     console.log("In updateShifts:", data);
-    // axios
-    //   .post("http://localhost:5000/shift", {
-    //     employee_id: empId,
-    //     shift_id: shiftId
-    //   })
-    //   .then(response => console.log(response))
-    //   .catch(error => console.log(error));
+    axios
+      .post("http://localhost:5000/shift", {
+        data
+      })
+      .then(response => console.log(response))
+      .catch(error => console.log(error));
   };
 
   const removeShift = (empId, shiftId) => {
