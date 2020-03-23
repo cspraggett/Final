@@ -5,12 +5,13 @@ import { Save } from "grommet-icons";
 export default function Shift(props) {
   //get back the ID from the strings
   function idArray(strings) {
+    console.log("in idArray:", strings);
     let result = [];
     strings.forEach(element => {
       for (let [key, value] of Object.entries(props.allEmployees)) {
-        //console.log(`element:${element}, ${key}: ${value}`);
+        console.log("key", typeof key);
         if (value.name === element) {
-          result.push(key);
+          result.push(parseInt(key));
           console.log(`found ${element} === ${value.name}`);
         }
       }
@@ -74,7 +75,6 @@ export default function Shift(props) {
         </Text>
         <Button
           onClick={() => {
-            console.log("in updateShifts");
             props.updateShifts({
               [props.id]: {
                 employees: idArray(currentlyShowing)
