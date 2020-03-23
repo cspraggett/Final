@@ -45,15 +45,6 @@ function App() {
   // };
   // setshift({... days.shifts})// spread each layer for shift to show which layer to update
 
-  const ScheduleViews = Object.keys(days).map(dayId => (
-    <ScheduleView
-      shifts={days[dayId].shifts}
-      dayId={dayId}
-      employees={employees}
-      label={days[dayId].label}
-    />
-  ));
-
   useEffect(() => {
     axios
       .get("http://localhost:5000/employees")
@@ -67,19 +58,21 @@ function App() {
     axios
       .get("http://localhost:5000/initial")
       .then(response => {
+        console.log("this is state:\n", response.data);
         setDays(response.data);
       })
       .catch(error => console.log("in error", error));
   }, []);
 
-  const updateShift = (empId, shiftId) => {
-    axios
-      .post("http://localhost:5000/shift", {
-        employee_id: empId,
-        shift_id: shiftId
-      })
-      .then(response => console.log(response))
-      .catch(error => console.log(error));
+  const updateShifts = data => {
+    console.log("In updateShifts:", data);
+    // axios
+    //   .post("http://localhost:5000/shift", {
+    //     employee_id: empId,
+    //     shift_id: shiftId
+    //   })
+    //   .then(response => console.log(response))
+    //   .catch(error => console.log(error));
   };
 
   const removeShift = (empId, shiftId) => {
@@ -113,6 +106,17 @@ function App() {
   //     { name: "Robert Smith", email: "robs@gmail.com" }
   //   ]);
   // }, []);
+
+  const ScheduleViews = Object.keys(days).map(dayId => (
+    <ScheduleView
+      updateShifts={updateShifts}
+      shifts={days[dayId].shifts}
+      dayId={dayId}
+      employees={employees}
+      label={days[dayId].label}
+    />
+  ));
+  
   const borderStyles = {
     size: "small",
     color: "neutral-3"

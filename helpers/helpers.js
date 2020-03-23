@@ -14,7 +14,7 @@ const convertShifts = (shifts, employeeShifts) => {
     state[shift.day_id] = {
       label: dayMap[shift.day_id],
       shifts: {
-        shiftID: {
+        [shift.id]: {
           startTime: Number(shift.start_time.slice(0, 2)),
           endTime: (Number(shift.start_time.slice(0, 2)) + shift.duration) % 12,
           capacity: shift.num_of_employees,
@@ -24,7 +24,9 @@ const convertShifts = (shifts, employeeShifts) => {
     };
     for (const employee of employeeShifts) {
       if (employee.shift_id === shift.id) {
-        state[shift.day_id].shifts.shiftID.employees.push(employee.employee_id);
+        state[shift.day_id].shifts[shift.id].employees.push(
+          employee.employee_id
+        );
       }
     }
   }
