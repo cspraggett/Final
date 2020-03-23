@@ -116,7 +116,7 @@ function App() {
       label={days[dayId].label}
     />
   ));
-  
+
   const borderStyles = {
     size: "small",
     color: "neutral-3"

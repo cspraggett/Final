@@ -37,8 +37,6 @@ router.get("/initial", (req, res) => {
   getShifts().then(all => {
     shifts = all[0].rows;
     employeeShifts = all[1].rows;
-    console.log("initial shifts:\n", all[0].rows);
-    console.log("initial shifts2:\n", all[1].rows);
     res.json(convertShifts(shifts, employeeShifts));
   });
 });
