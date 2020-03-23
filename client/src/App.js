@@ -10,12 +10,12 @@ import AddEmployee from "./components/AddEmployee";
 
 let selectedEmployee;
 
-// function revisedRandId() {
-//   return Math.random()
-//     .toString(36)
-//     .replace(/[^a-z]+/g, "")
-//     .substr(2, 10);
-// }
+function revisedRandId() {
+  return Math.random()
+    .toString(36)
+    .replace(/[^a-z]+/g, "")
+    .substr(2, 10);
+}
 
 function App() {
   const [show, setShow] = useState();
@@ -116,7 +116,7 @@ function App() {
       label={days[dayId].label}
     />
   ));
-
+  
   const borderStyles = {
     size: "small",
     color: "neutral-3"
