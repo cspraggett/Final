@@ -69,7 +69,7 @@ const removeEmployeeFromShift = (oldEmp, newEmp, shiftID) => {
   const existingData = convertDBData(oldEmp);
   existingData.forEach(curr => {
     if (!newEmp.includes(curr)) {
-      deleteEmployeeFromShift(curr, shiftID)
+      deleteEmployeeFromShift({ employee_id: curr, shift_id: shiftID })
         .then(() => console.log(`${curr} has been removed from the databasse`))
         .catch(error => console.log(error));
     }
@@ -78,19 +78,18 @@ const removeEmployeeFromShift = (oldEmp, newEmp, shiftID) => {
 
 getCurrentShifts = data => {
   shiftID = parseInt(Object.keys(data));
-  getCurrShifts(shiftID)
-    .then(result => {
-      addNewEmployeesToShift(
-        [...result.rows],
-        data[shiftID].employees,
-        shiftID
-      );
-    })
-    .then(() =>
+  const shifts = getCurrShifts(shiftID)
+    .then(result =>
       removeEmployeeFromShift(
         [...result.rows],
         data[shiftID].employees,
-        shiftID
+        shiftID.then(results => {
+          addNewEmployeesToShift(
+            [...result.rows],
+            data[shiftID].employees,
+            shiftID
+          );
+        })
       )
     )
     .catch(error => console.log(result));

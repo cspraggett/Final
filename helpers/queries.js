@@ -46,6 +46,7 @@ const postShifts = newShift => {
 };
 
 const deleteEmployeeFromShift = data => {
+  console.log("in deleteEmployeeFromShift", data);
   return client.query(
     `
     DELETE FROM employeeshifts WHERE employee_id = $1 AND shift_id = $2;
@@ -76,6 +77,7 @@ const updateEmployee = data => {
   );
 };
 const deleteEmployee = id => {
+  console.log("in deleteEmployee:", id);
   client.query(
     `
     DELETE FROM employees WHERE id = $1
