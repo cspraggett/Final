@@ -9,9 +9,9 @@ export default function ScheduleView(props) {
   const shifts = shiftIds.map(shiftID => {
 
     const employees = getEmployeesForShift(props.employees, props.shifts, shiftID)
-    return {object: <Shift 
+    return {object: <Shift
                       id={shiftID}
-                      start={9} 
+                      start={8} 
                       duration={8} 
                       capacity={4} 
                       allEmployees={props.employees} 
@@ -23,7 +23,7 @@ export default function ScheduleView(props) {
 
   return(
     <Box align="stretch" fill="horizontal">
-      <Text>{props.label}</Text>
+      <Text alignSelf="center">{props.label}</Text>
       <List
       border={true}
       primaryKey="object"

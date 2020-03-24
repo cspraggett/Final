@@ -65,7 +65,7 @@ export default function Shift(props) {
   return (
     <Box>
       {dropDownTable()}
-      <Box direction="row">
+      <Box direction="row" justifyContent="between">
         <Text>
           {props.start} -{" "}
           {props.start + props.duration > 12
