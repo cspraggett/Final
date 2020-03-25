@@ -39,9 +39,9 @@ const postShifts = newShift => {
   return client.query(
     `
     INSERT INTO employeeshifts (employee_id, shift_id)
-      VALUES ($1, $2);
+      VALUES $1;
   `,
-    [newShift.employee_id, newShift.shift_id]
+    [newShift]
   );
 };
 
@@ -49,10 +49,10 @@ const deleteEmployeeFromShift = data => {
   console.log("in deleteEmployeeFromShift", data);
   return client.query(
     `
-    DELETE FROM employeeshifts WHERE employee_id = $1 AND shift_id = $2;
+    DELETE FROM employeeshifts WHERE shift_id = $1;
   `,
 
-    [data.employee_id, data.shift_id]
+    [data.shift_id]
   );
 };
 

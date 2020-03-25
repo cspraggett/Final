@@ -76,25 +76,29 @@ const removeEmployeeFromShift = (oldEmp, newEmp, shiftID) => {
   });
 };
 
-getCurrentShifts = data => {
-  shiftID = parseInt(Object.keys(data));
-  const shifts = getCurrShifts(shiftID)
-    .then(result =>
-      removeEmployeeFromShift(
-        [...result.rows],
-        data[shiftID].employees,
-        shiftID.then(results => {
-          addNewEmployeesToShift(
-            [...result.rows],
-            data[shiftID].employees,
-            shiftID
-          );
-        })
-      )
-    )
-    .catch(error => console.log(result));
-};
-module.exports = { transformEmployees, convertShifts, getCurrentShifts };
+// getCurrentShifts = data => {
+//   shiftID = parseInt(Object.keys(data));
+//   Promise.all(() => {
+//     getCurrShifts(shiftID),
+//     removeEmployeeFromShift([...result.rows], data[shiftID].employees),
+//     addNewEmployeesToShift(
+//       [...result.rows],
+//       data[shiftID].employees,
+//       shiftID
+//     )
+//   })
+//     .then(all => {
+
+//     }
+//       .then(
+//         results => {
+
+//         }
+//       )
+//     )
+//     .catch(error => console.log(result));
+// };
+module.exports = { transformEmployees, convertShifts };
 
 // const makeShiftState = (shifts, employeeShifts) => {
 //   const state = [];

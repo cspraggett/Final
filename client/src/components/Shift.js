@@ -78,7 +78,8 @@ export default function Shift(props) {
             props.updateShifts({
               [props.id]: {
                 employees: idArray(currentlyShowing)
-              }
+              },
+              dayID: parseInt(props.dayID)
             });
           }}
           alignSelf="end"

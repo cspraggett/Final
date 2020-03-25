@@ -55,9 +55,8 @@ router.post("/shift", (req, res) => {
   getCurrentShifts(req.body.data);
 });
 
-router.delete("/shift/:empId/:shiftId", (req, res) => {
+router.delete("/shift/:shiftId", (req, res) => {
   const data = {
-    employee_id: req.params.empId,
     shift_id: req.params.shiftId
   };
 

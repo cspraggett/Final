@@ -64,14 +64,35 @@ function App() {
       .catch(error => console.log("in error", error));
   }, []);
 
+  const getEmployeesForShift = data => {
+    let shiftID = Object.keys(data)[0];
+    let { employees } = data[shiftID];
+    let returnString = "";
+    employees.forEach((emp, i) => {
+      returnString += `(${shiftID}, ${emp})`;
+      if (i < employees.length - 1) {
+        returnString += ",\n";
+      }
+    });
+
+    // console.log("This is my function!", returnString);
+    return returnString;
+  };
+
   const updateShifts = data => {
     console.log("In updateShifts:", data);
+    console.log("current state: ", days);
+    console.log(days[data.dayID].shifts);
+    const shiftInfo = getEmployeesForShift(data);
     axios
-      .post("http://localhost:5000/shift", {
-        data
-      })
-      .then(response => console.log(response))
-      .catch(error => console.log(error));
+      .delete(`http://localhost:5000/shift/${days[data.dayID].shifts}`)
+      .then(() => axios.post("http://localhost:5000/shift", shiftInfo));
+    // axios
+    //   .post("http://localhost:5000/shift", {
+    //     data
+    //   })
+    //   .then(response => console.log(response))
+    //   .catch(error => console.log(error));
   };
 
   const removeShift = (empId, shiftId) => {
