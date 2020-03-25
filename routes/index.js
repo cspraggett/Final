@@ -56,11 +56,9 @@ router.post("/shift", (req, res) => {
 });
 
 router.delete("/shift/:shiftId", (req, res) => {
-  const data = {
-    shift_id: req.params.shiftId
-  };
-
-  deleteEmployeeFromShift(data)
+  shift_id = req.params.shiftId;
+  console.log("index", shift_id);
+  deleteEmployeeFromShift(shift_id)
     .then(response => console.log("All gone", response))
     .catch(error => console.log(error));
 });

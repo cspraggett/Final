@@ -82,11 +82,11 @@ function App() {
   const updateShifts = data => {
     console.log("In updateShifts:", data);
     console.log("current state: ", days);
-    console.log(days[data.dayID].shifts);
+    const shiftID = parseInt(Object.keys(days[data.dayID].shifts));
     const shiftInfo = getEmployeesForShift(data);
-    axios
-      .delete(`http://localhost:5000/shift/${days[data.dayID].shifts}`)
-      .then(() => axios.post("http://localhost:5000/shift", shiftInfo));
+    // axios.delete(`http://localhost:5000/shift/${shiftID}`);
+    removeShift(shiftID);
+    // .then(() => axios.post("http://localhost:5000/shift", shiftInfo));
     // axios
     //   .post("http://localhost:5000/shift", {
     //     data
@@ -95,10 +95,10 @@ function App() {
     //   .catch(error => console.log(error));
   };
 
-  const removeShift = (empId, shiftId) => {
-    console.log("in removeAppointment", empId, shiftId);
+  const removeShift = shiftId => {
+    console.log("in removeAppointment", shiftId);
     axios
-      .delete(`http://localhost:5000/shift/${empId}/${shiftId}`)
+      .delete(`http://localhost:5000/shift/${shiftId}`)
       .then(response => console.log(response))
       .catch(error => console.log(error));
   };

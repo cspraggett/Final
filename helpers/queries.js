@@ -52,7 +52,7 @@ const deleteEmployeeFromShift = data => {
     DELETE FROM employeeshifts WHERE shift_id = $1;
   `,
 
-    [data.shift_id]
+    [data]
   );
 };
 
