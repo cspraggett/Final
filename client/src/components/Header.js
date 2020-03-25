@@ -6,10 +6,10 @@ export default function HeaderBar(props) {
   return (
     <Header background="neutral-3">
       <Button icon={<Home />} hoverIndicator />
-      <Box height="small" width="small">
+      <Box height="xsmall" width="xsmall">
         <Image
           fit="cover"
-          src="client/public/images/shift-logo-blue.svg"
+          src="/images/shift-logo-blue.svg"
           // src="//v2.grommet.io/assets/Wilderpeople_Ricky.jpg"
         />
       </Box>
