@@ -125,9 +125,10 @@ function App() {
     <Grommet>
       <HeaderBar alignSelf="stretch"></HeaderBar>
       <Grid
+        background={{color: 'neutral-3'}}
         rows={["xxsmall", "large"]}
         columns={["small", "flex"]}
-        gap={{"row": "medium"}}
+        gap={{ row: "medium" }}
         areas={[
           // { name: 'header', start: [0, 0], end: [1, 0] },
           { name: "nav", start: [0, 0], end: [0, 1] },
