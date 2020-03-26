@@ -47,19 +47,19 @@ router.get("/initial", (req, res) => {
 
 router.post("/shift", (req, res) => {
   // console.log(req.body);
-  console.log("in router: ", req.body.data);
+  console.log("in router: ", Object.keys(req.body)[0]);
   res.send("ok... got it!");
-  // postShifts(req.body)
-  //   .then(results => console.log("It's all good:", results))
-  //   .catch(error => console.log(error));
-  getCurrentShifts(req.body.data);
+  postShifts(Object.keys(req.body))
+    .then(results => console.log("It's all good:", results))
+    .catch(error => console.log(error));
+  // getCurrentShifts(req.body.data);
 });
 
 router.delete("/shift/:shiftId", (req, res) => {
   shift_id = req.params.shiftId;
   console.log("index", shift_id);
   deleteEmployeeFromShift(shift_id)
-    .then(response => console.log("All gone", response))
+    .then(response => res.send("all done"))
     .catch(error => console.log(error));
 });
 

@@ -35,13 +35,12 @@ const getCurrShifts = id => {
 };
 
 const postShifts = newShift => {
-  console.log("in postShifts", newShift);
+  console.log("in postShifts", JSON.stringify(newShift[0]));
   return client.query(
     `
-    INSERT INTO employeeshifts (employee_id, shift_id)
-      VALUES $1;
-  `,
-    [newShift]
+    INSERT INTO employeeshifts (shift_id, employee_id)
+      VALUES ${newShift} ;
+  `
   );
 };
 
