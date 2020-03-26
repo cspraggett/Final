@@ -23,24 +23,35 @@ const getShifts = () => {
   ]);
 };
 
-const postShifts = newShift => {
-  console.log("in postShifts", newShift);
+const getCurrShifts = id => {
   return client.query(
     `
-    INSERT INTO employeeshifts (employee_id, shift_id)
-      VALUES ($1, $2);
+    select employee_id 
+    from employeeshifts 
+    where shift_id = $1
   `,
-    [newShift.employee_id, newShift.shift_id]
+    [id]
+  );
+};
+
+const postShifts = newShift => {
+  console.log("in postShifts", JSON.stringify(newShift[0]));
+  return client.query(
+    `
+    INSERT INTO employeeshifts (shift_id, employee_id)
+      VALUES ${newShift} ;
+  `
   );
 };
 
 const deleteEmployeeFromShift = data => {
+  console.log("in deleteEmployeeFromShift", data);
   return client.query(
     `
-    DELETE FROM employeeshifts WHERE employee_id = $1 AND shift_id = $2;
+    DELETE FROM employeeshifts WHERE shift_id = $1;
   `,
 
-    [data.employee_id, data.shift_id]
+    [data]
   );
 };
 
@@ -65,6 +76,7 @@ const updateEmployee = data => {
   );
 };
 const deleteEmployee = id => {
+  console.log("in deleteEmployee:", id);
   client.query(
     `
     DELETE FROM employees WHERE id = $1
@@ -80,5 +92,6 @@ module.exports = {
   deleteEmployeeFromShift,
   addEmployee,
   updateEmployee,
-  deleteEmployee
+  deleteEmployee,
+  getCurrShifts
 };
