@@ -19,7 +19,7 @@ export default function ScheduleView(props) {
                       updateShifts={props.updateShifts}
                     />}
   })
-  shifts.push({object:<AddButton/>})
+  //shifts.push({object:<AddButton/>})
 
   return(
     <Box align="stretch" fill="horizontal">
@@ -29,7 +29,7 @@ export default function ScheduleView(props) {
       primaryKey="object"
       data = {shifts}
       />
-
+      <AddButton onClick={()=>{props.addShift()}}/>
     </Box>
   );
 }

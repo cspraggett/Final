@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Grommet, Box, Layer, Grid } from "grommet";
 import axios from "axios";
 import CalendarSelector from "./components/CalendarSelector";
@@ -7,6 +7,7 @@ import AddButton from "./components/AddButton";
 import HeaderBar from "./components/Header";
 import ScheduleView from "./components/ScheduleView";
 import AddEmployee from "./components/AddEmployee";
+import AddShift from "./components/AddShift";
 
 let selectedEmployee;
 
@@ -18,14 +19,19 @@ function revisedRandId() {
 }
 
 function App() {
-  const [show, setShow] = useState();
+  const [showEmployeeAdd, setShowEmployeeAdd] = useState();
+  const [showShiftAdd, setShowShiftAdd] = useState();
   const [employees, setEmployees] = useState({});
   const [days, setDays] = useState({});
+
+  const addShift = newValue => {
+    console.log("in addShift here");
+  };
 
   const updateEmployees = newValue => {
     // const id = revisedRandId();
     console.log("in updateEmployees:", newValue);
-    setShow(false);
+    setShowEmployeeAdd(false);
     axios
       .put(`http://localhost:5000/employees`, newValue)
       .then(results => {
@@ -38,7 +44,7 @@ function App() {
   // const updateEmployees = newValue => {
   //   const id = revisedRandId();
   //   // console.log(newValue);
-  //   setShow(false);
+  //   setShowEmployeeAdd(false);
   //   setEmployees({ ...employees, [id]: newValue });
 
   //   // console.log("employees:", employees);
@@ -109,6 +115,7 @@ function App() {
 
   const ScheduleViews = Object.keys(days).map(dayId => (
     <ScheduleView
+      addShift={()=>{setShowShiftAdd(true)}}
       updateShifts={updateShifts}
       shifts={days[dayId].shifts}
       dayId={dayId}
@@ -143,25 +150,35 @@ function App() {
           <CalendarSelector />
 
           <EmployeeList emp={Object.values(employees)} />
-          <AddButton onClick={() => setShow(true)} />
+          <AddButton onClick={() => setShowEmployeeAdd(true)} />
         </Box>
         <Box border={borderStyles} gridArea="main" direction="row">
           {ScheduleViews}
         </Box>
       </Grid>
 
-      <Box direction="row"></Box>
-      {show && (
+      {showEmployeeAdd && (
         <Layer
-          onEsc={() => setShow(false)}
-          onClickOutside={() => setShow(false)}
+          onEsc={() => setShowEmployeeAdd(false)}
+          onClickOutside={() => setShowEmployeeAdd(false)}
         >
           <AddEmployee
             onSave={updateEmployees}
             starting={
               selectedEmployee && selectedEmployee
             } /*this only sets the starting data if it exists. Trust me*/
-            onClose={() => setShow(false)}
+            onClose={() => setShowEmployeeAdd(false)}
+          />
+        </Layer>
+      )}
+      {showShiftAdd && (
+        <Layer
+        onEsc={() => setShowShiftAdd(false)}
+        onClickOutside={() => setShowShiftAdd(false)}
+        >
+          <AddShift
+            onClose={()=>{setShowShiftAdd(false)}}
+            onSave={()=>{console.log("ran onSave callback")}}//this should run a function that updates DB, state, and setShowShiftAdd(false)
           />
         </Layer>
       )}

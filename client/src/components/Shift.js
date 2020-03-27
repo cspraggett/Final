@@ -2,7 +2,32 @@ import React, { useState } from "react";
 import { Box, Text, Select, Button } from "grommet";
 import { Save } from "grommet-icons";
 
+//TODO make currently showing state beloning to this component
+
 export default function Shift(props) {
+
+  //creates a array of strings that displays the names already assigned to the shift
+  function setupSelect() {
+    let currentlyShowing = {};
+    props.assignedEmployees.forEach((element, index) => {
+      currentlyShowing = {[index]: element.name};
+    });
+    console.log("setup output:", currentlyShowing);
+    return currentlyShowing;
+  }
+
+  const [selectOptions, setSelectOptions] = useState(setupSelect());
+
+  //creates an array of all employee name strings
+  let employeeNameList = [];
+  function setupNamelist() {
+      Object.values(props.allEmployees).forEach(element => {
+      employeeNameList.push(element.name);
+    });
+  }
+
+  setupNamelist();
+
   //get back the ID from the strings
   function idArray(strings) {
     let result = [];
@@ -11,7 +36,7 @@ export default function Shift(props) {
         //console.log(`element:${element}, ${key}: ${value}`);
         if (value.name === element) {
           result.push(key);
-          console.log(`found ${element} === ${value.name}`);
+          //console.log(`found ${element} === ${value.name}`);
         }
       }
     });
@@ -19,22 +44,12 @@ export default function Shift(props) {
     return result;
   }
 
-  //creates an array of all employee name strings
-  let employeeNameList = [];
-  Object.values(props.allEmployees).forEach(element => {
-    employeeNameList.push(element.name);
-  });
-
-  //creates a array of strings that displays the names already assigned to the shift
-  let currentlyShowing = [];
-  props.assignedEmployees.forEach(element => {
-    currentlyShowing.push(element.name);
-  });
-
   //filters selectable names by removing ones already in use
-  let filteredOptions = employeeNameList.filter(element => {
-    return !currentlyShowing.includes(element);
-  });
+  function filteredOptions() {
+    return employeeNameList.filter(element => {
+      return !Object.values(selectOptions).includes(element);
+    });
+  } 
 
   //the actual dropdown element
   function dropDownTable() {
@@ -42,8 +57,8 @@ export default function Shift(props) {
     let show = "None";
     //one dropdown selecter per shift capacity
     for (let i = 0; i < props.capacity; i++) {
-      if (currentlyShowing[i]) {
-        show = currentlyShowing[i];
+      if (selectOptions.i) {
+        show = selectOptions.i;
       } else {
         //display "none" if there is no employee assigned to this "slot"
         show = "None";
@@ -51,10 +66,12 @@ export default function Shift(props) {
       result.push(
         <Select
           value={show}
-          options={filteredOptions} //display the filtered names as the options
+          options={filteredOptions()} //display the filtered names as the options
           onChange={({ option }) => {
+            setSelectOptions({...selectOptions, [i]: option});
+            //console.log(selectOptions);
             //callback to run when a dropdown item is selected
-            currentlyShowing[i] = option;
+            //currentlyShowing[i] = option;
           }}
         />
       );
@@ -77,7 +94,7 @@ export default function Shift(props) {
             console.log("in updateShifts");
             props.updateShifts({
               [props.id]: {
-                employees: idArray(currentlyShowing)
+                employees: idArray(setupSelect())
               }
             });
           }}
