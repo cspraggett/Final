@@ -50,6 +50,7 @@ export default function Shift(props) {
       }
       result.push(
         <Select
+          background={{color:"accent-4", opacity:false}}
           value={show}
           options={filteredOptions} //display the filtered names as the options
           onChange={({ option }) => {
@@ -63,9 +64,13 @@ export default function Shift(props) {
   }
 
   return (
-    <Box>
+    <Box align="center" background={{
+          
+      
+        }}>
       {dropDownTable()}
-      <Box direction="row" justifyContent="between">
+      
+      <Box direction="row" justifyContent="between" >
         <Text>
           {props.start} -{" "}
           {props.start + props.duration > 12
@@ -81,10 +86,11 @@ export default function Shift(props) {
               }
             });
           }}
-          alignSelf="end"
+          
           icon={<Save />}
         />
       </Box>
+
     </Box>
   );
 }

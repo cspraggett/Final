@@ -10,6 +10,7 @@ export default function ScheduleView(props) {
 
     const employees = getEmployeesForShift(props.employees, props.shifts, shiftID)
     return {object: <Shift
+                      
                       id={shiftID}
                       start={8} 
                       duration={8} 
@@ -25,6 +26,7 @@ export default function ScheduleView(props) {
     <Box align="stretch" fill="horizontal">
       <Text alignSelf="center">{props.label}</Text>
       <List
+      background={{color:'brand', opacity:true}}
       border={true}
       primaryKey="object"
       data = {shifts}
