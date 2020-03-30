@@ -138,7 +138,6 @@ function App() {
       .post("http://localhost:5000/employees", emp)
       // .then(response => console.log("I'm done", response.data.id))
       .then(response => {
-        console.log("the results:", response);
         const newName = {
           name: response.data.first_name + " " + response.data.last_name,
           email: response.data.email
