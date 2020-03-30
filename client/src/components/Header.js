@@ -2,7 +2,7 @@ import React from "react";
 import { Header, Button, Menu, Image, Box } from "grommet";
 import { Home } from "grommet-icons";
 // import shift from "../images/shift-logo-blue.svg";
-import logo from "../images/logo.png";
+import logo from "../images/logo2.png";
 
 export default function HeaderBar(props) {
   return (
