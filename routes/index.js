@@ -64,6 +64,7 @@ router.delete("/shift/:shiftId", (req, res) => {
 });
 
 router.post("/employees", (req, res) => {
+  console.log("router employee", req.body);
   addEmployee(req.body)
     .then(response => {
       console.log("All good");

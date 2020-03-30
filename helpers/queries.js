@@ -56,6 +56,7 @@ const deleteEmployeeFromShift = data => {
 };
 
 const addEmployee = data => {
+  console.log("(.)addEmployee");
   return client.query(
     `
     INSERT INTO employees (admin_id, first_name, last_name, email)

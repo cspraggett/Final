@@ -15,7 +15,7 @@ const myTheme = {
       family: "Arial"
     },
     animation: {
-      jiggle:{
+      jiggle: {
         duration: "10s"
       }
     }
@@ -127,10 +127,17 @@ function App() {
   };
 
   const addEmployee = emp => {
-    console.log("addEmployee:", emp);
+    setShowEmployeeAdd(false);
+    const name = emp.name.split(" ");
+    const first = name[0];
+    const last = name[1];
+    emp.first_name = first;
+    emp.last_name = last;
+    console.log("!----addEmployee:", emp);
     axios
       .post("http://localhost:5000/employees", emp)
-      .then(response => console.log(response))
+      // .then(response => console.log("I'm done", response))
+      .then(setEmployees({ ...employees, [id]: newValue }))
       .catch(error => console.log(error));
   };
 
@@ -152,7 +159,9 @@ function App() {
 
   const ScheduleViews = Object.keys(days).map(dayId => (
     <ScheduleView
-      addShift={()=>{setShowShiftAdd(true)}}
+      addShift={() => {
+        setShowShiftAdd(true);
+      }}
       updateShifts={updateShifts}
       shifts={days[dayId].shifts}
       dayId={dayId}
@@ -211,7 +220,7 @@ function App() {
           onClickOutside={() => setShowEmployeeAdd(false)}
         >
           <AddEmployee
-            onSave={updateEmployees}
+            onSave={addEmployee}
             starting={
               selectedEmployee && selectedEmployee
             } /*this only sets the starting data if it exists. Trust me*/
@@ -221,12 +230,16 @@ function App() {
       )}
       {showShiftAdd && (
         <Layer
-        onEsc={() => setShowShiftAdd(false)}
-        onClickOutside={() => setShowShiftAdd(false)}
+          onEsc={() => setShowShiftAdd(false)}
+          onClickOutside={() => setShowShiftAdd(false)}
         >
           <AddShift
-            onClose={()=>{setShowShiftAdd(false)}}
-            onSave={()=>{console.log("ran onSave callback")}}//this should run a function that updates DB, state, and setShowShiftAdd(false)
+            onClose={() => {
+              setShowShiftAdd(false);
+            }}
+            onSave={() => {
+              console.log("ran onSave callback");
+            }} //this should run a function that updates DB, state, and setShowShiftAdd(false)
           />
         </Layer>
       )}
