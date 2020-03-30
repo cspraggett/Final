@@ -7,7 +7,6 @@ import { getEmployeesForShift } from "../Helper/selector";
 export default function ScheduleView(props) {
   const shiftIds = Object.keys(props.shifts);
   const shifts = shiftIds.map(shiftID => {
-
     const employees = getEmployeesForShift(
       props.employees,
       props.shifts,
@@ -30,17 +29,20 @@ export default function ScheduleView(props) {
   });
   //shifts.push({ object: <AddButton /> });
 
-  return(
-    <Box align="stretch" fill="horizontal" >
+  return (
+    <Box align="stretch" fill="horizontal">
       <Text alignSelf="center">{props.label}</Text>
       <List
-      
-      background={{color:'brand', opacity:true}}
-      border={true}
-      primaryKey="object"
-      data = {shifts}
+        background={{ color: "brand", opacity: true }}
+        border={true}
+        primaryKey="object"
+        data={shifts}
       />
-      <AddButton onClick={()=>{props.addShift()}}/>
+      <AddButton
+        onClick={() => {
+          props.addShift();
+        }}
+      />
     </Box>
   );
 }
