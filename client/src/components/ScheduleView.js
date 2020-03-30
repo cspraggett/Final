@@ -29,21 +29,6 @@ export default function ScheduleView(props) {
   });
   shifts.push({ object: <AddButton /> });
 
-
-    const employees = getEmployeesForShift(props.employees, props.shifts, shiftID)
-    return {object: <Shift  
-                      
-                      id={shiftID}
-                      start={8} 
-                      duration={8} 
-                      capacity={4} 
-                      allEmployees={props.employees} 
-                      assignedEmployees={employees}
-                      updateShifts={props.updateShifts}
-                    />}
-  })
-  shifts.push({object:<AddButton/>})
-
   return(
     <Box align="stretch" fill="horizontal" >
       <Text alignSelf="center">{props.label}</Text>
