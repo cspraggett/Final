@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grommet, Box, Layer, Grid } from "grommet";
+import { Grommet, Box, Layer, Grid, materialLight } from "grommet";
 import axios from "axios";
 import CalendarSelector from "./components/CalendarSelector";
 import EmployeeList from "./components/EmployeeList";
@@ -7,6 +7,19 @@ import AddButton from "./components/AddButton";
 import HeaderBar from "./components/Header";
 import ScheduleView from "./components/ScheduleView";
 import AddEmployee from "./components/AddEmployee";
+
+const myTheme = {
+  global: {
+    font: {
+      family: "Arial"
+    },
+    animation: {
+      jiggle:{
+        duration: "10s"
+      }
+    }
+  }
+};
 
 let selectedEmployee;
 
@@ -146,12 +159,12 @@ function App() {
     color: "neutral-3"
   };
   return (
-    <Grommet>
+    <Grommet theme={myTheme}>
       <HeaderBar alignSelf="stretch"></HeaderBar>
       <Grid
         rows={["xxsmall", "large"]}
         columns={["small", "flex"]}
-        gap="none"
+        gap={{ row: "medium" }}
         areas={[
           // { name: 'header', start: [0, 0], end: [1, 0] },
           { name: "nav", start: [0, 0], end: [0, 1] },
@@ -159,6 +172,10 @@ function App() {
         ]}
       >
         <Box
+          background={{
+            image:
+              "url(https://us.123rf.com/450wm/brunoilfo/brunoilfo1903/brunoilfo190300010/124674878-stock-vector-empty-editable-gradient-background-vertical-vector-illustration.jpg?ver=6)"
+          }}
           gridArea="nav"
           width={"small"}
           align="center"
@@ -169,7 +186,14 @@ function App() {
           <EmployeeList emp={Object.values(employees)} />
           <AddButton onClick={() => setShow(true)} />
         </Box>
-        <Box border={borderStyles} gridArea="main" direction="row">
+        <Box
+          gridArea="main"
+          direction="row"
+          background={{
+            image:
+              "url(https://www.xmple.com/wallpaper/blue-pink-gradient-linear-1920x1080-c2-ffb6c1-b0c4de-a-225-f-14.svg)"
+          }}
+        >
           {ScheduleViews}
         </Box>
       </Grid>

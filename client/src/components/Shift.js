@@ -50,6 +50,7 @@ export default function Shift(props) {
       }
       result.push(
         <Select
+          background={{color:"accent-4", opacity:false}}
           value={show}
           options={filteredOptions} //display the filtered names as the options
           onChange={({ option }) => {
@@ -63,9 +64,10 @@ export default function Shift(props) {
   }
 
   return (
-    <Box>
+    <Box align="center" gap="small">
       {dropDownTable()}
-      <Box direction="row">
+      
+      <Box direction="row" justifyContent="between" gap="xlarge" >
         <Text>
           {props.start} -{" "}
           {props.start + props.duration > 12
@@ -82,10 +84,11 @@ export default function Shift(props) {
               dayID: parseInt(props.dayID)
             });
           }}
-          alignSelf="end"
+          
           icon={<Save />}
         />
       </Box>
+
     </Box>
   );
 }
