@@ -139,7 +139,9 @@ function App() {
       // .then(response => console.log("I'm done", response.data.id))
       .then(response => {
         const newName = {
-          name: response.data.first_name + " " + response.data.last_name,
+          name: response.data.last_name
+            ? response.data.first_name + " " + response.data.last_name
+            : response.data.first_name + " ",
           email: response.data.email
         };
         setEmployees({ ...employees, [response.data.id]: newName });

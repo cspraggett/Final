@@ -10,7 +10,7 @@ CREATE TABLE employees (
   id SERIAL PRIMARY KEY NOT NULL,
   admin_id INTEGER REFERENCES admins(id) ON DELETE CASCADE,
   first_name VARCHAR(50) NOT NULL,
-  last_name VARCHAR(50) NOT NULL,
+  last_name VARCHAR(50),
   email VARCHAR(250) NOT NULL
 );
 CREATE TABLE availability (
