@@ -36,14 +36,14 @@ function App() {
   const [days, setDays] = useState({});
 
   const updateEmployees = newValue => {
-    // const id = revisedRandId();
+    const id = revisedRandId();
     console.log("in updateEmployees:", newValue);
     setShow(false);
     axios
       .put(`http://localhost:5000/employees`, newValue)
       .then(results => {
         console.log(results);
-        // setEmployees({ ...employees, []...newValue });
+        setEmployees({ ...employees, [id]: newValue });
       })
       .catch(error => console.log(error));
   };
