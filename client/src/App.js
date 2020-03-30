@@ -77,22 +77,46 @@ function App() {
       .catch(error => console.log("in error", error));
   }, []);
 
-  const updateShifts = data => {
-    console.log("In updateShifts:", data);
-    // axios
-    //   .post("http://localhost:5000/shift", {
-    //     employee_id: empId,
-    //     shift_id: shiftId
-    //   })
-    //   .then(response => console.log(response))
-    //   .catch(error => console.log(error));
+  const getEmployeesForShift = data => {
+    let shiftID = Object.keys(data)[0];
+    let { employees } = data[shiftID];
+    let returnString = "";
+    employees.forEach((emp, i) => {
+      returnString += `(${shiftID}, ${emp})`;
+      if (i < employees.length - 1) {
+        returnString += ", ";
+      }
+    });
+
+    console.log("This is my function!", returnString);
+    return returnString;
   };
 
-  const removeShift = (empId, shiftId) => {
-    console.log("in removeAppointment", empId, shiftId);
-    axios
-      .delete(`http://localhost:5000/shift/${empId}/${shiftId}`)
-      .then(response => console.log(response))
+  const removeShift = (shiftId, shiftInfo) => {
+    console.log("in removeAppointment", shiftId);
+    return axios.delete(`http://localhost:5000/shift/${shiftId}`);
+    // .then(response => console.log(response))
+    // .catch(error => console.log(error));
+  };
+
+  const updateShifts = data => {
+    console.log("In updateShifts:", data);
+    console.log("current state: ", days);
+    const shiftID = parseInt(Object.keys(days[data.dayID].shifts));
+    const shiftInfo = getEmployeesForShift(data);
+    // axios.delete(`http://localhost:5000/shift/${shiftID}`);
+    removeShift(shiftID)
+      .then(() => {
+        console.log("delete finito");
+        axios.post("http://localhost:5000/shift", shiftInfo);
+      })
+      // .then(() => )
+      // .then(() => axios.post("http://localhost:5000/shift", shiftInfo));
+      // axios
+      //   .post("http://localhost:5000/shift", {
+      //     data
+      //   })
+      //   .then(response => console.log(response))
       .catch(error => console.log(error));
   };
 

@@ -2,7 +2,11 @@ const express = require("express");
 const router = express.Router();
 const client = require("../db/index");
 
-const { transformEmployees, convertShifts } = require("../helpers/helpers");
+const {
+  transformEmployees,
+  convertShifts,
+  getCurrentShifts
+} = require("../helpers/helpers");
 const {
   getEmployees,
   getShifts,
@@ -43,20 +47,19 @@ router.get("/initial", (req, res) => {
 
 router.post("/shift", (req, res) => {
   // console.log(req.body);
+  console.log("in router: ", Object.keys(req.body)[0]);
   res.send("ok... got it!");
-  postShifts(req.body)
+  postShifts(Object.keys(req.body))
     .then(results => console.log("It's all good:", results))
     .catch(error => console.log(error));
+  // getCurrentShifts(req.body.data);
 });
 
-router.delete("/shift/:empId/:shiftId", (req, res) => {
-  const data = {
-    employee_id: req.params.empId,
-    shift_id: req.params.shiftId
-  };
-
-  deleteEmployeeFromShift(data)
-    .then(response => console.log("All gone", response))
+router.delete("/shift/:shiftId", (req, res) => {
+  shift_id = req.params.shiftId;
+  console.log("index", shift_id);
+  deleteEmployeeFromShift(shift_id)
+    .then(response => res.send("all done"))
     .catch(error => console.log(error));
 });
 

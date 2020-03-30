@@ -10,7 +10,7 @@ export default function Shift(props) {
       for (let [key, value] of Object.entries(props.allEmployees)) {
         //console.log(`element:${element}, ${key}: ${value}`);
         if (value.name === element) {
-          result.push(key);
+          result.push(parseInt(key));
           console.log(`found ${element} === ${value.name}`);
         }
       }
@@ -80,7 +80,8 @@ export default function Shift(props) {
             props.updateShifts({
               [props.id]: {
                 employees: idArray(currentlyShowing)
-              }
+              },
+              dayID: parseInt(props.dayID)
             });
           }}
           

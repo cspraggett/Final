@@ -1,3 +1,9 @@
+const {
+  getCurrShifts,
+  postShifts,
+  deleteEmployeeFromShift
+} = require("./queries");
+
 const dayMap = {
   0: "Sunday",
   1: "Monday",
@@ -44,6 +50,54 @@ const transformEmployees = employees => {
   return employeeState;
 };
 
+const convertDBData = data => data.map(curr => curr.employee_id);
+
+const addNewEmployeesToShift = (oldEmp, newEmp, shiftID) => {
+  console.log(oldEmp);
+  const existingData = convertDBData(oldEmp);
+  newEmp.forEach(curr => {
+    if (!existingData.includes(curr)) {
+      console.log(`${curr} isn't in the db ${existingData}`);
+      postShifts({ employee_id: curr, shift_id: shiftID }).catch(error =>
+        console.log(error)
+      );
+    }
+  });
+};
+
+const removeEmployeeFromShift = (oldEmp, newEmp, shiftID) => {
+  const existingData = convertDBData(oldEmp);
+  existingData.forEach(curr => {
+    if (!newEmp.includes(curr)) {
+      deleteEmployeeFromShift({ employee_id: curr, shift_id: shiftID })
+        .then(() => console.log(`${curr} has been removed from the databasse`))
+        .catch(error => console.log(error));
+    }
+  });
+};
+
+// getCurrentShifts = data => {
+//   shiftID = parseInt(Object.keys(data));
+//   Promise.all(() => {
+//     getCurrShifts(shiftID),
+//     removeEmployeeFromShift([...result.rows], data[shiftID].employees),
+//     addNewEmployeesToShift(
+//       [...result.rows],
+//       data[shiftID].employees,
+//       shiftID
+//     )
+//   })
+//     .then(all => {
+
+//     }
+//       .then(
+//         results => {
+
+//         }
+//       )
+//     )
+//     .catch(error => console.log(result));
+// };
 module.exports = { transformEmployees, convertShifts };
 
 // const makeShiftState = (shifts, employeeShifts) => {
