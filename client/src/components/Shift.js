@@ -1,9 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Text, Select, Button } from "grommet";
 import { Save } from "grommet-icons";
 
 export default function Shift(props) {
   const [selectOptions, setSelectOptions] = useState({});
+
+  useEffect (() => {
+    //creates a array of strings that displays the names already assigned to the shift
+    props.assignedEmployees.forEach((element, index) => {
+      setSelectOptions({...selectOptions, [index]: element.name});
+      console.log("element",element.name,"index",index,"selectOptions", selectOptions);
+    });
+  },[]);
 
   //get back the ID from the strings
   function idArray(strings) {
@@ -24,14 +32,6 @@ export default function Shift(props) {
   Object.values(props.allEmployees).forEach(element => {
     employeeNameList.push(element.name);
   });
-
-  //creates a array of strings that displays the names already assigned to the shift
-  let currentlyShowing = [];
-  props.assignedEmployees.forEach((element) => {
-    currentlyShowing.push(element.name);
-    //setSelectOptions({...selectOptions, element.name});
-  });
-  console.log("currentlyShowing:", currentlyShowing, "selectOptions:", selectOptions);
 
   //filters selectable names by removing ones already in use
   let filteredOptions = employeeNameList.filter(element => {
@@ -56,8 +56,6 @@ export default function Shift(props) {
           options={filteredOptions} //display the filtered names as the options
           onChange={({ option }) => {
             setSelectOptions({...selectOptions, [i]: option});
-            //callback to run when a dropdown item is selected
-            //currentlyShowing[i] = option;
           }}
         />
       );
@@ -80,7 +78,7 @@ export default function Shift(props) {
             console.log("in updateShifts");
             props.updateShifts({
               [props.id]: {
-                employees: idArray(currentlyShowing)
+                //employees: idArray(currentlyShowing)
               }
             });
           }}
