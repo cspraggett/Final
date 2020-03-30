@@ -7,10 +7,14 @@ export default function Shift(props) {
 
   useEffect (() => {
     //creates a array of strings that displays the names already assigned to the shift
+    let temp = {};
     props.assignedEmployees.forEach((element, index) => {
-      setSelectOptions({...selectOptions, [index]: element.name});
+      temp = {...temp, [index]: element.name}
       console.log("element",element.name,"index",index,"selectOptions", selectOptions);
     });
+    console.log('------>', temp);
+
+    setSelectOptions(temp);
   },[]);
 
   //get back the ID from the strings
@@ -44,8 +48,10 @@ export default function Shift(props) {
     let show = "None";
     //one dropdown selecter per shift capacity
     for (let i = 0; i < props.capacity; i++) {
-      if (selectOptions.i) {
-        show = selectOptions.i;
+      // console.log(props)
+      if (selectOptions[i]) {
+        console.log(selectOptions[i])
+        show = selectOptions[i];
       } else {
         //display "none" if there is no employee assigned to this "slot"
         show = "None";
@@ -78,7 +84,7 @@ export default function Shift(props) {
             console.log("in updateShifts");
             props.updateShifts({
               [props.id]: {
-                //employees: idArray(currentlyShowing)
+                employees: idArray(Object.values(selectOptions))
               }
             });
           }}
