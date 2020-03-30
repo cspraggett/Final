@@ -9,6 +9,19 @@ import ScheduleView from "./components/ScheduleView";
 import AddEmployee from "./components/AddEmployee";
 import AddShift from "./components/AddShift";
 
+const myTheme = {
+  global: {
+    font: {
+      family: "Arial"
+    },
+    animation: {
+      jiggle:{
+        duration: "10s"
+      }
+    }
+  }
+};
+
 let selectedEmployee;
 
 function revisedRandId() {
@@ -29,14 +42,14 @@ function App() {
   };
 
   const updateEmployees = newValue => {
-    // const id = revisedRandId();
+    const id = revisedRandId();
     console.log("in updateEmployees:", newValue);
     setShowEmployeeAdd(false);
     axios
       .put(`http://localhost:5000/employees`, newValue)
       .then(results => {
         console.log(results);
-        // setEmployees({ ...employees, []...newValue });
+        setEmployees({ ...employees, [id]: newValue });
       })
       .catch(error => console.log(error));
   };
@@ -70,22 +83,46 @@ function App() {
       .catch(error => console.log("in error", error));
   }, []);
 
-  const updateShifts = data => {
-    console.log("In updateShifts:", data);
-    // axios
-    //   .post("http://localhost:5000/shift", {
-    //     employee_id: empId,
-    //     shift_id: shiftId
-    //   })
-    //   .then(response => console.log(response))
-    //   .catch(error => console.log(error));
+  const getEmployeesForShift = data => {
+    let shiftID = Object.keys(data)[0];
+    let { employees } = data[shiftID];
+    let returnString = "";
+    employees.forEach((emp, i) => {
+      returnString += `(${shiftID}, ${emp})`;
+      if (i < employees.length - 1) {
+        returnString += ", ";
+      }
+    });
+
+    console.log("This is my function!", returnString);
+    return returnString;
   };
 
-  const removeShift = (empId, shiftId) => {
-    console.log("in removeAppointment", empId, shiftId);
-    axios
-      .delete(`http://localhost:5000/shift/${empId}/${shiftId}`)
-      .then(response => console.log(response))
+  const removeShift = (shiftId, shiftInfo) => {
+    console.log("in removeAppointment", shiftId);
+    return axios.delete(`http://localhost:5000/shift/${shiftId}`);
+    // .then(response => console.log(response))
+    // .catch(error => console.log(error));
+  };
+
+  const updateShifts = data => {
+    console.log("In updateShifts:", data);
+    console.log("current state: ", days);
+    const shiftID = parseInt(Object.keys(days[data.dayID].shifts));
+    const shiftInfo = getEmployeesForShift(data);
+    // axios.delete(`http://localhost:5000/shift/${shiftID}`);
+    removeShift(shiftID)
+      .then(() => {
+        console.log("delete finito");
+        axios.post("http://localhost:5000/shift", shiftInfo);
+      })
+      // .then(() => )
+      // .then(() => axios.post("http://localhost:5000/shift", shiftInfo));
+      // axios
+      //   .post("http://localhost:5000/shift", {
+      //     data
+      //   })
+      //   .then(response => console.log(response))
       .catch(error => console.log(error));
   };
 
@@ -129,12 +166,12 @@ function App() {
     color: "neutral-3"
   };
   return (
-    <Grommet>
+    <Grommet theme={myTheme}>
       <HeaderBar alignSelf="stretch"></HeaderBar>
       <Grid
         rows={["xxsmall", "large"]}
         columns={["small", "flex"]}
-        gap="none"
+        gap={{ row: "medium" }}
         areas={[
           // { name: 'header', start: [0, 0], end: [1, 0] },
           { name: "nav", start: [0, 0], end: [0, 1] },
@@ -142,6 +179,10 @@ function App() {
         ]}
       >
         <Box
+          background={{
+            image:
+              "url(https://us.123rf.com/450wm/brunoilfo/brunoilfo1903/brunoilfo190300010/124674878-stock-vector-empty-editable-gradient-background-vertical-vector-illustration.jpg?ver=6)"
+          }}
           gridArea="nav"
           width={"small"}
           align="center"
@@ -152,7 +193,14 @@ function App() {
           <EmployeeList emp={Object.values(employees)} />
           <AddButton onClick={() => setShowEmployeeAdd(true)} />
         </Box>
-        <Box border={borderStyles} gridArea="main" direction="row">
+        <Box
+          gridArea="main"
+          direction="row"
+          background={{
+            image:
+              "url(https://www.xmple.com/wallpaper/blue-pink-gradient-linear-1920x1080-c2-ffb6c1-b0c4de-a-225-f-14.svg)"
+          }}
+        >
           {ScheduleViews}
         </Box>
       </Grid>

@@ -23,7 +23,7 @@ export default function Shift(props) {
     strings.forEach(element => {
       for (let [key, value] of Object.entries(props.allEmployees)) {
         if (value.name === element) {
-          result.push(key);
+          result.push(parseInt(key));
           //console.log(`found ${element} === ${value.name}`);
         }
       }
@@ -58,6 +58,7 @@ export default function Shift(props) {
       }
       result.push(
         <Select
+          background={{color:"accent-4", opacity:false}}
           value={show}
           options={filteredOptions} //display the filtered names as the options
           onChange={({ option }) => {
@@ -70,9 +71,10 @@ export default function Shift(props) {
   }
 
   return (
-    <Box>
+    <Box align="center" gap="small">
       {dropDownTable()}
-      <Box direction="row">
+      
+      <Box direction="row" justifyContent="between" gap="xlarge" >
         <Text>
           {props.start} -{" "}
           {props.start + props.duration > 12
@@ -85,13 +87,15 @@ export default function Shift(props) {
             props.updateShifts({
               [props.id]: {
                 employees: idArray(Object.values(selectOptions))
-              }
+              },
+              dayID: parseInt(props.dayID)
             });
           }}
-          alignSelf="end"
+          
           icon={<Save />}
         />
       </Box>
+
     </Box>
   );
 }
