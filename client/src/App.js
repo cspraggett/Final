@@ -11,7 +11,7 @@ import AddEmployee from "./components/AddEmployee";
 const myTheme = {
   global: {
     font: {
-      family: "Comic Sans MS"
+      family: "Arial"
     },
     animation: {
       jiggle:{
