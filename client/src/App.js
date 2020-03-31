@@ -130,7 +130,7 @@ function App() {
     setShowEmployeeAdd(false);
     const name = emp.name.split(" ");
     const first = name[0];
-    const last = name[1];
+    const last = name[1] || " ";
     emp.first_name = first;
     emp.last_name = last;
     console.log("!----addEmployee:", emp);
@@ -139,9 +139,7 @@ function App() {
       // .then(response => console.log("I'm done", response.data.id))
       .then(response => {
         const newName = {
-          name: response.data.last_name
-            ? response.data.first_name + " " + response.data.last_name
-            : response.data.first_name + " ",
+          name: response.data.first_name + " " + response.data.last_name,
           email: response.data.email
         };
         setEmployees({ ...employees, [response.data.id]: newName });
