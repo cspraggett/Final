@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Box, Text, Select, Button } from "grommet";
-import { Save } from "grommet-icons";
+import { Checkmark } from "grommet-icons";
 
 export default function Shift(props) {
   const [selectOptions, setSelectOptions] = useState({});
@@ -92,7 +92,7 @@ export default function Shift(props) {
             });
           }}
           
-          icon={<Save />}
+          icon={<Checkmark/>}
         />
       </Box>
 
